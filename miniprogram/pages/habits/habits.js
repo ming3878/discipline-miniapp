@@ -25,9 +25,7 @@ Page({
     periodUnit: PERIOD_UNIT,
     today: '',
     editMinDate: '',   // 编辑 C4 时：不得晚于最早破戒记录
-    editMaxDate: '',   // 不得晚于今天
-    // 记录数映射（用于判断编辑 C4 限制）
-    earliestCheckin: {}
+    editMaxDate: ''    // 不得晚于今天
   },
 
   onShow() {
@@ -38,19 +36,14 @@ Page({
     this.setData({ loading: true });
     try {
       const today = D.todayKey();
-      const [habitsRaw, records] = await Promise.all([DB.getHabits(), DB.getAllCheckins()]);
+      // 列表只需要 habits 本身；最早破戒日期改为编辑时按需查，不再预先拉全表
+      const habitsRaw = await DB.getHabits();
       // WXML 不支持 .slice()，列表展示用的短日期与周期文案在此预处理
       const habits = habitsRaw.map((h) => Object.assign({}, h, {
         startShort: h.startDate ? h.startDate.slice(5) : '',
         periodText: PERIOD_TEXT[h.periodType] || '每周'
       }));
-      // 每个戒断目标的最早破戒日期（编辑 C4 时作为上限）
-      const earliest = {};
-      for (const h of habits) {
-        const dates = records.filter((r) => r.habitId === h._id).map((r) => r.date).sort();
-        earliest[h._id] = dates.length ? dates[0] : '';
-      }
-      this.setData({ loading: false, habits, earliestCheckin: earliest, today });
+      this.setData({ loading: false, habits, today });
     } catch (err) {
       console.error('[戒断目标管理] 加载失败', err);
       this.setData({ loading: false });
@@ -72,11 +65,23 @@ Page({
   },
 
   // ---------- 编辑 ----------
-  editHabit(e) {
+  async editHabit(e) {
     const id = e.currentTarget.dataset.id;
     const h = this.data.habits.find((x) => x._id === id);
     if (!h) return;
-    const earliest = this.data.earliestCheckin[id];
+    // 最早破戒日期按需查（只取 1 条），用于限制起点不得晚于首次破戒
+    // 查不到就不能编辑：否则 editMaxDate 退化成今天，会把起点放到破戒之后
+    let earliest = '';
+    wx.showLoading({ title: '加载中', mask: true });
+    try {
+      earliest = await DB.getEarliestCheckinDate(id);
+    } catch (err) {
+      console.error('[戒断目标管理] 读取最早破戒日期失败', err);
+      wx.hideLoading();
+      wx.showToast({ title: '读取记录失败，请重试', icon: 'none' });
+      return;
+    }
+    wx.hideLoading();
     this.setData({
       showForm: true,
       isEdit: true,
@@ -89,7 +94,6 @@ Page({
         periodType: h.periodType,
         limit: Number(h.limit)
       },
-      // C4 不得晚于最早破戒记录（有记录时），也不得晚于今天
       editMinDate: '',
       editMaxDate: earliest || this.data.today
     });

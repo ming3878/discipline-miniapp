@@ -2,6 +2,8 @@
 const DB = require('../../utils/db.js');
 const D = require('../../utils/date.js');
 
+const MAX_COUNT = DB.MAX_COUNT; // 99，与写入层同一口径
+
 Page({
   data: {
     habitId: '',
@@ -13,6 +15,8 @@ Page({
     minLabel: '',
     periodLabel: '',
     count: 1,
+    canMinus: false,
+    canPlus: true,
     note: '',
     saving: false
   },
@@ -65,20 +69,33 @@ Page({
     this.setData({ note: e.detail.value });
   },
 
+  // 次数计步器：收敛到 [1, MAX_COUNT]，边界置灰
+  setCount(n) {
+    const v = Math.min(MAX_COUNT, Math.max(1, Math.floor(Number(n)) || 1));
+    this.setData({ count: v, canMinus: v > 1, canPlus: v < MAX_COUNT });
+  },
+
   minusCount() {
-    if (this.data.count > 1) this.setData({ count: this.data.count - 1 });
+    if (this.data.count <= 1) return;
+    this.setCount(this.data.count - 1);
   },
 
   plusCount() {
-    this.setData({ count: this.data.count + 1 });
+    if (this.data.count >= MAX_COUNT) return;
+    this.setCount(this.data.count + 1);
   },
 
   async save() {
     if (this.data.saving) return;
-    const { habitId, date, minDate, maxDate, count, note } = this.data;
-    // 校验：次数 >= 1
+    const { habitId, date, minDate, maxDate, note } = this.data;
+    const count = Number(this.data.count);
+    // 校验：次数为 [1, MAX_COUNT] 的整数
     if (!Number.isInteger(count) || count < 1) {
       wx.showToast({ title: '次数至少为 1', icon: 'none' });
+      return;
+    }
+    if (count > MAX_COUNT) {
+      wx.showToast({ title: `次数不能超过 ${MAX_COUNT}`, icon: 'none' });
       return;
     }
     // 校验：日期在 [C4, 今天] 之间

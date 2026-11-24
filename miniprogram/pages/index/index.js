@@ -45,6 +45,8 @@ Page({
   },
 
   onPullDownRefresh() {
+    // 下拉是用户主动要最新数据，先让缓存失效，否则 15s 内会命中缓存看起来没刷新
+    DB.invalidateCheckins();
     this.loadData().then(() => wx.stopPullDownRefresh());
   },
 

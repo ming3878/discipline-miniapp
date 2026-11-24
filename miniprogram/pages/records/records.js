@@ -24,11 +24,12 @@ Page({
 
   async loadData() {
     try {
-      const [habit, allCheckins] = await Promise.all([
+      // 只查本戒断目标的记录，避免为筛一个月把整张表拉下来
+      const [habit, habitCheckins] = await Promise.all([
         DB.getHabitById(this.data.habitId),
-        DB.getAllCheckins()
+        DB.getCheckinsByHabit(this.data.habitId)
       ]);
-      const records = allCheckins.filter((r) => r.habitId === this.data.habitId).slice().sort((a, b) => {
+      const records = habitCheckins.slice().sort((a, b) => {
         if (a.date !== b.date) return a.date < b.date ? 1 : -1;
         return (b.createdAt || 0) - (a.createdAt || 0);
       });

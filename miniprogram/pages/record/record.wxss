@@ -64,6 +64,13 @@
 }
 .step-n { font-size: 48rpx; font-weight: 700; color: var(--ink); }
 
+/* 到达上下限时置灰，避免用户连点无效 */
+.step-btn.off {
+  color: var(--faint);
+  background: #fff;
+  border-color: var(--mist);
+}
+
 /* 原型 .note-area：min-height 76px、padding 12/14、font 13 */
 .note-area {
   width: 100%;

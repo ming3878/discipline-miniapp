@@ -25,11 +25,11 @@
     <view class="field">
       <label>本次破戒次数 <text class="req">*</text></label>
       <view class="stepper">
-        <view class="step-btn" bindtap="minusCount">−</view>
+        <view class="step-btn {{canMinus ? '' : 'off'}}" bindtap="minusCount">−</view>
         <view class="step-n num">{{count}}</view>
-        <view class="step-btn" bindtap="plusCount">+</view>
+        <view class="step-btn {{canPlus ? '' : 'off'}}" bindtap="plusCount">+</view>
       </view>
-      <view class="field-hint">同一天可多次记录，次数会自动累加</view>
+      <view class="field-hint">同一天可多次记录，次数会累加；单次最多 99 次</view>
     </view>
 
     <!-- B3 备注 -->

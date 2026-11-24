@@ -37,14 +37,18 @@ Page({
   async loadData() {
     try {
       const today = D.todayKey();
+      // 只查本戒断目标的记录：原先拉整张 checkins 表再在前端过滤，数据越多越慢
       const [habit, records] = await Promise.all([
         DB.getHabitById(this.data.habitId),
-        DB.getAllCheckins()
+        DB.getCheckinsByHabit(this.data.habitId)
       ]);
       if (!habit) {
         wx.showToast({ title: '戒断目标不存在', icon: 'none' });
         return;
       }
+      // 记录挂在页面实例上，翻月 / 点格子直接复用，不重复请求
+      this.habitRaw = habit;
+      this.records = records;
       const month = this.data.month || today.slice(0, 7);
       const detail = S.habitDetail(habit, records, today);
       // WXML 不支持 .slice()，在 JS 层预处理显示用日期
@@ -92,22 +96,17 @@ Page({
     this.rebuildMonth(month);
   },
 
-  async rebuildMonth(month) {
-    const [habit, records] = await Promise.all([
-      DB.getHabitById(this.data.habitId),
-      DB.getAllCheckins()
-    ]);
-    this.buildMonth(month, habit, records, D.todayKey());
+  // 翻月只重算网格，复用已加载的记录，不再发请求
+  rebuildMonth(month) {
+    if (!this.habitRaw) return;
+    this.buildMonth(month, this.habitRaw, this.records || [], D.todayKey());
   },
 
-  // 点击月历某日：显示当日详情
-  async onCellTap(e) {
+  // 点击月历某日：从已加载记录里取当日明细，不再全表查询
+  onCellTap(e) {
     const key = e.currentTarget.dataset.key;
     if (!key) return;
-    const records = await DB.getAllCheckins();
-    const dayRecords = records.filter(
-      (r) => r.habitId === this.data.habitId && r.date === key
-    );
+    const dayRecords = (this.records || []).filter((r) => r.date === key);
     this.setData({ selectedCell: key, dayRecords });
   },
 
