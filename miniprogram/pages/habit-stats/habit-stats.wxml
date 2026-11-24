@@ -1,5 +1,5 @@
 <view class="page detail-page" wx:if="{{habit && detail}}">
-  <!-- 主题头 -->
+  <!-- 戒断目标头 -->
   <view class="detail-head">
     <view class="emoji">{{habit.icon}}</view>
     <view class="dh-info">
@@ -11,7 +11,7 @@
   <!-- 6 项指标网格（3×2） -->
   <view class="metrics">
     <view class="metric">
-      <view class="k">习惯始于</view>
+      <view class="k">起始日</view>
       <view class="v sm num">{{detail.startDateDisplay}}</view>
     </view>
     <view class="metric">
@@ -35,7 +35,6 @@
       <view class="v sm">查看 ›</view>
     </view>
   </view>
-  <view class="metric-note">达成 = 已结束周期中破戒次数未超上限；当前进行中周期未计入</view>
 
   <!-- 月历破戒图 -->
   <view class="section-label">月历破戒情况</view>

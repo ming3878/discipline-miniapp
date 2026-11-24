@@ -8,7 +8,7 @@ Page({
     loading: true,
     summary: null,
     trend: null,       // 近 6 月破戒趋势
-    compare: null,     // 本月主题对比
+    compare: null,     // 本月戒断目标对比
     hasData: false
   },
 

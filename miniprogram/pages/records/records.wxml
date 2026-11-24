@@ -10,7 +10,7 @@
   <!-- 空态 -->
   <view wx:if="{{displayRecords.length === 0}}" class="empty">
     <view class="empty-ic">◌</view>
-    <view class="empty-title">该主题还没有破戒记录</view>
+    <view class="empty-title">该戒断目标还没有破戒记录</view>
     <view class="empty-sub">保持住，就是最好的状态</view>
   </view>
 

@@ -22,13 +22,13 @@ Page({
     const today = D.todayKey();
     this.setData({ habitId, date: today, maxDate: today, dateText: this.fmtDate(today) });
     if (!habitId) {
-      wx.showToast({ title: '主题不存在', icon: 'none' });
+      wx.showToast({ title: '戒断目标不存在', icon: 'none' });
       return;
     }
     try {
       const habit = await DB.getHabitById(habitId);
       if (!habit) {
-        wx.showToast({ title: '主题不存在', icon: 'none' });
+        wx.showToast({ title: '戒断目标不存在', icon: 'none' });
         return;
       }
       const periodMap = { day: '每天', week: '每周', month: '每月' };
@@ -41,7 +41,7 @@ Page({
       });
       wx.setNavigationBarTitle({ title: '记录破戒' });
     } catch (err) {
-      console.error('[记录页] 加载主题失败', err);
+      console.error('[记录页] 加载戒断目标失败', err);
       wx.showToast({ title: '加载失败', icon: 'none' });
     }
   },

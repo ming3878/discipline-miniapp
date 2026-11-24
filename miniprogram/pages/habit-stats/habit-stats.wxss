@@ -32,7 +32,6 @@
 .metric .v.clay { color: var(--clay); }
 .metric .u { font-size: 24rpx; color: var(--faint); font-weight: 400; }
 .metric.link .v { color: var(--sub); font-size: 31rpx; padding-top: 9rpx; }
-.metric-note { font-size: 24rpx; color: var(--faint); margin-top: 14rpx; line-height: 1.5; padding: 0 5rpx; }
 
 /* 月历：标题行在卡片外，卡片内只有网格 + 图例 */
 .cal-head { display: flex; justify-content: space-between; align-items: center; padding: 0 5rpx 24rpx; }

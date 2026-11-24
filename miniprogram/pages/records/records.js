@@ -41,7 +41,7 @@ Page({
       let monthIndex = this.data.monthIndex || 1;
       if (monthIndex >= months.length) monthIndex = 1;
       this.setData({
-        habitName: habit ? habit.name : '主题',
+        habitName: habit ? habit.name : '戒断目标',
         allRecords: records,
         months,
         monthIndex

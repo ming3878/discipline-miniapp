@@ -35,7 +35,7 @@
       },
       {
         "pagePath": "pages/habits/habits",
-        "text": "主题",
+        "text": "戒断目标",
         "iconPath": "images/habits.png",
         "selectedIconPath": "images/habits-active.png"
       }

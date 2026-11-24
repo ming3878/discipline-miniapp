@@ -3,7 +3,7 @@
   <view class="hero">
     <view class="date num">{{dateLabel}}</view>
     <view class="greet">{{greet}}</view>
-    <view wx:if="{{total > 0}}" class="hero-sub">{{total}} 个主题正在坚持中</view>
+    <view wx:if="{{total > 0}}" class="hero-sub">{{total}} 个戒断目标正在坚持中</view>
   </view>
 
   <!-- 加载中 -->
@@ -12,8 +12,8 @@
   <!-- 空态 -->
   <view wx:elif="{{cards.length === 0}}" class="empty" bindtap="goHabits">
     <view class="empty-ic">◌</view>
-    <view class="empty-title">还没有主题</view>
-    <view class="empty-sub">点此创建第一个戒断主题</view>
+    <view class="empty-title">还没有戒断目标</view>
+    <view class="empty-sub">点此创建第一个戒断目标</view>
     <view class="empty-btn">去创建 +</view>
   </view>
 

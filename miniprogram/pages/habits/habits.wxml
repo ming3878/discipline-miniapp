@@ -5,11 +5,11 @@
     <!-- 空态 -->
     <view wx:if="{{habits.length === 0}}" class="empty">
       <view class="empty-ic">◌</view>
-      <view class="empty-title">还没有主题</view>
-      <view class="empty-sub">先建一个想戒掉的习惯，从今天开始算</view>
+      <view class="empty-title">还没有戒断目标</view>
+      <view class="empty-sub">先建一个戒断目标，从今天开始算</view>
     </view>
 
-    <!-- 主题列表：编辑 + 更多（上移/下移/删除） -->
+    <!-- 戒断目标列表：编辑 + 更多（上移/下移/删除） -->
     <view wx:for="{{habits}}" wx:key="_id" class="mgmt-item">
       <view class="emoji">{{item.icon}}</view>
       <view class="info">
@@ -21,14 +21,14 @@
     </view>
 
     <!-- 新增入口 -->
-    <view class="add-dash" bindtap="addHabit">＋ 新增主题</view>
+    <view class="add-dash" bindtap="addHabit">＋ 新增戒断目标</view>
   </block>
 
   <!-- 编辑/新增表单（内嵌弹层） -->
   <view wx:if="{{showForm}}" class="form-mask" bindtap="closeForm">
     <view class="form-panel" catchtap="noop">
       <view class="form-head">
-        <view class="form-title">{{isEdit ? '编辑主题' : '新增主题'}}</view>
+        <view class="form-title">{{isEdit ? '编辑戒断目标' : '新增戒断目标'}}</view>
         <view class="form-close" bindtap="closeForm">✕</view>
       </view>
 
@@ -100,7 +100,7 @@
 
       <view class="form-foot">
         <view class="btn-cancel" bindtap="closeForm">取消</view>
-        <view class="btn-primary" bindtap="saveHabit">{{isEdit ? '保存修改' : '创建主题'}}</view>
+        <view class="btn-primary" bindtap="saveHabit">{{isEdit ? '保存修改' : '创建戒断目标'}}</view>
       </view>
     </view>
   </view>

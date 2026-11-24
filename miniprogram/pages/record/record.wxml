@@ -1,5 +1,5 @@
 <view class="page record-page">
-  <!-- 顶部主题条：明确在给谁记录 -->
+  <!-- 顶部戒断目标条：明确在给谁记录 -->
   <view wx:if="{{habit}}" class="target-strip">
     <view class="emoji">{{habit.icon}}</view>
     <view>
@@ -18,7 +18,7 @@
           <text class="change">更改 ›</text>
         </view>
       </picker>
-      <view class="field-hint">最早可选 {{minLabel}}（主题起点）</view>
+      <view class="field-hint">最早可选 {{minLabel}}（戒断起点）</view>
     </view>
 
     <!-- B2 次数 -->

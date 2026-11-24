@@ -1,4 +1,4 @@
-// 主题管理页（FR-03 新增/编辑、FR-07 删除、排序）
+// 戒断目标管理页（FR-03 新增/编辑、FR-07 删除、排序）
 const DB = require('../../utils/db.js');
 const D = require('../../utils/date.js');
 
@@ -44,7 +44,7 @@ Page({
         startShort: h.startDate ? h.startDate.slice(5) : '',
         periodText: PERIOD_TEXT[h.periodType] || '每周'
       }));
-      // 每个主题的最早破戒日期（编辑 C4 时作为上限）
+      // 每个戒断目标的最早破戒日期（编辑 C4 时作为上限）
       const earliest = {};
       for (const h of habits) {
         const dates = records.filter((r) => r.habitId === h._id).map((r) => r.date).sort();
@@ -52,7 +52,7 @@ Page({
       }
       this.setData({ loading: false, habits, earliestCheckin: earliest, today });
     } catch (err) {
-      console.error('[主题管理] 加载失败', err);
+      console.error('[戒断目标管理] 加载失败', err);
       this.setData({ loading: false });
       wx.showToast({ title: '加载失败', icon: 'none' });
     }
@@ -184,7 +184,7 @@ Page({
       wx.showToast({ title: isEdit ? '已更新' : '已创建', icon: 'success' });
       this.loadData();
     } catch (err) {
-      console.error('[主题管理] 保存失败', err);
+      console.error('[戒断目标管理] 保存失败', err);
       wx.showToast({ title: '保存失败，请重试', icon: 'none' });
     }
   },
@@ -196,14 +196,14 @@ Page({
   },
 
   async doDelete(id, name) {
-    const confirmed = await this.confirm(`确定删除「${name}」？该主题的全部破戒记录也会一并删除，且不可恢复。`);
+    const confirmed = await this.confirm(`确定删除「${name}」？该戒断目标的全部破戒记录也会一并删除，且不可恢复。`);
     if (!confirmed) return;
     try {
       await DB.deleteHabit(id);
       wx.showToast({ title: '已删除', icon: 'success' });
       this.loadData();
     } catch (err) {
-      console.error('[主题管理] 删除失败', err);
+      console.error('[戒断目标管理] 删除失败', err);
       wx.showToast({ title: '删除失败，请重试', icon: 'none' });
     }
   },
@@ -244,7 +244,7 @@ Page({
       await DB.reorderHabits(ids);
       this.loadData();
     } catch (err) {
-      console.error('[主题管理] 排序失败', err);
+      console.error('[戒断目标管理] 排序失败', err);
       wx.showToast({ title: '排序失败', icon: 'none' });
     }
   },

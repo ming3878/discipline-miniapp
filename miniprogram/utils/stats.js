@@ -18,12 +18,12 @@ function brokenDates(records) {
   return Array.from(new Set(records.map((r) => r.date))).sort();
 }
 
-// 某主题的全部记录
+// 某戒断目标的全部记录
 function recordsOf(habitId, records) {
   return records.filter((r) => r.habitId === habitId);
 }
 
-// 某主题在 [startKey, endKey] 闭区间内的破戒总次数
+// 某戒断目标在 [startKey, endKey] 闭区间内的破戒总次数
 function countInRange(rs, startKey, endKey) {
   let sum = 0;
   for (const r of rs) {
@@ -133,7 +133,7 @@ function achievedCount(habit, records, today) {
   return completedPeriods(habit, today).filter(([a, b]) => countInRange(rs, a, b) <= limit).length;
 }
 
-// 1.6 记录明细：该主题全部记录（倒序）
+// 1.6 记录明细：该戒断目标全部记录（倒序）
 function recordList(habitId, records) {
   return recordsOf(habitId, records).slice().sort((a, b) => {
     if (a.date !== b.date) return a.date < b.date ? 1 : -1;
@@ -178,7 +178,7 @@ function overallCleanDays(habits, records, today) {
   return Math.max(0, D.diffDays(start, todayKey));
 }
 
-// 坚持最久主题：当前已戒天数最大者，并列取创建时间较早者
+// 坚持最久戒断目标：当前已戒天数最大者，并列取创建时间较早者
 function longestHabit(habits, records, today) {
   let best = null;
   for (const h of habits) {
@@ -216,7 +216,7 @@ function monthlyTrend(records, today, n) {
   return { data, max };
 }
 
-// 本月各主题破戒对比（降序）
+// 本月各戒断目标破戒对比（降序）
 function habitMonthCompare(habits, records, month, today) {
   const m = month || (today || D.todayKey()).slice(0, 7);
   const list = habits.map((h) => {

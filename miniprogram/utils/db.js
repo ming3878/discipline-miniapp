@@ -1,5 +1,5 @@
 // 云数据库封装：直接操作数据库，依赖集合权限「仅创建者可读写」实现多用户隔离
-// 集合：habits（主题卡）、checkins（破戒记录）
+// 集合：habits（戒断目标卡）、checkins（破戒记录）
 const db = wx.cloud.database();
 
 const HABITS = 'habits';
@@ -10,7 +10,7 @@ function now() {
   return Date.now();
 }
 
-// ---------- 主题 habits ----------
+// ---------- 戒断目标 habits ----------
 
 async function getHabits() {
   const res = await db.collection(HABITS).orderBy('order', 'asc').get();
@@ -41,7 +41,7 @@ async function updateHabit(id, data) {
   });
 }
 
-// 删除主题：先分批删掉其全部破戒记录，再删主题本身
+// 删除戒断目标：先分批删掉其全部破戒记录，再删戒断目标本身
 async function deleteHabit(id) {
   const records = await getCheckinsByHabit(id);
   for (let i = 0; i < records.length; i += 20) {

@@ -23,7 +23,7 @@ Page({
     const habitId = options.id || '';
     this.setData({ habitId });
     if (!habitId) {
-      wx.showToast({ title: '主题不存在', icon: 'none' });
+      wx.showToast({ title: '戒断目标不存在', icon: 'none' });
       return;
     }
     await this.loadData();
@@ -42,7 +42,7 @@ Page({
         DB.getAllCheckins()
       ]);
       if (!habit) {
-        wx.showToast({ title: '主题不存在', icon: 'none' });
+        wx.showToast({ title: '戒断目标不存在', icon: 'none' });
         return;
       }
       const month = this.data.month || today.slice(0, 7);
@@ -59,7 +59,7 @@ Page({
         today
       });
       this.buildMonth(month, habit, records, today);
-      wx.setNavigationBarTitle({ title: '主题统计' });
+      wx.setNavigationBarTitle({ title: '戒断目标统计' });
     } catch (err) {
       console.error('[单卡统计] 加载失败', err);
       wx.showToast({ title: '加载失败', icon: 'none' });

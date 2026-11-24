@@ -1,4 +1,4 @@
-/* 主题管理页 · 数值按原型 px × 2.36 换算，与设计稿等比例 */
+/* 戒断目标管理页 · 数值按原型 px × 2.36 换算，与设计稿等比例 */
 .habits-page { padding-top: 14rpx; }
 .state-hint { text-align: center; color: var(--faint); font-size: 26rpx; padding: 80rpx 0; }
 

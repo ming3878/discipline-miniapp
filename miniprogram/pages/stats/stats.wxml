@@ -4,7 +4,7 @@
   <view wx:elif="{{!hasData}}" class="empty">
     <view class="empty-ic">◌</view>
     <view class="empty-title">还没有统计数据</view>
-    <view class="empty-sub">创建主题并记录后，这里会显示趋势</view>
+    <view class="empty-sub">创建戒断目标并记录后，这里会显示趋势</view>
   </view>
 
   <block wx:else>
@@ -13,18 +13,18 @@
       <view class="sum big">
         <view class="k">当前连续未破戒</view>
         <view class="v num">{{summary.cleanDays}}<text class="u"> 天</text></view>
-        <view class="big-note">任一主题破戒即重新计时</view>
+        <view class="big-note">任一戒断目标破戒即重新计时</view>
       </view>
       <view class="sum">
         <view class="k">累计破戒</view>
         <view class="v num clay">{{summary.totalCount}}<text class="u"> 次</text></view>
       </view>
       <view class="sum">
-        <view class="k">进行中主题</view>
+        <view class="k">进行中</view>
         <view class="v num">{{summary.habitCount}}<text class="u"> 个</text></view>
       </view>
       <view class="sum wide">
-        <view class="k">坚持最久的主题</view>
+        <view class="k">坚持最久</view>
         <view wx:if="{{summary.longest}}" class="v sm num">{{summary.longest.habit.icon}} {{summary.longest.habit.name}} · {{summary.longest.days}} 天</view>
         <view wx:else class="v sm faint">—</view>
       </view>
@@ -42,11 +42,11 @@
       </view>
     </view>
 
-    <!-- 图形②：本月各主题破戒对比 -->
-    <view class="section-label">本月各主题破戒对比</view>
+    <!-- 图形②：本月各戒断目标破戒对比 -->
+    <view class="section-label">本月各戒断目标破戒对比</view>
     <view class="chart">
-      <view class="ct">本月 · 按主题</view>
-      <view wx:if="{{compare.list.length === 0}}" class="chart-empty">暂无主题</view>
+      <view class="ct">本月 · 按戒断目标</view>
+      <view wx:if="{{compare.list.length === 0}}" class="chart-empty">暂无戒断目标</view>
       <view wx:else>
         <view wx:for="{{compare.list}}" wx:key="index" class="hbar">
           <view class="row">
