@@ -2,8 +2,8 @@
   <!-- 顶部问候 -->
   <view class="hero">
     <view class="date num">{{dateLabel}}</view>
-    <view class="greet">今天，也要清醒地活着</view>
-    <view class="hero-sub">记录破戒，是为了看清自己</view>
+    <view class="greet">{{greet}}</view>
+    <view wx:if="{{total > 0}}" class="hero-sub">{{total}} 个主题正在坚持中</view>
   </view>
 
   <!-- 加载中 -->
@@ -59,7 +59,7 @@
         <view class="cnt">
           {{item.periodName}}破戒 <b class="num {{item.overLimit ? 'cnt-clay' : ''}}">{{item.periodCount}}</b> / {{item.limit}} 次
         </view>
-        <view class="rec-btn" data-id="{{item.id}}" catchtap="goRecord">记一次 +</view>
+        <view class="rec-btn" data-id="{{item.id}}" catchtap="goRecord">记一次</view>
       </view>
     </view>
   </block>

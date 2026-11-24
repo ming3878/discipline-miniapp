@@ -4,37 +4,37 @@
     <view class="emoji">{{habit.icon}}</view>
     <view>
       <view class="t">{{habit.name}}</view>
-      <view class="hint">正在为这个主题记录破戒</view>
+      <view class="hint">始于 {{habit.startDate}} · {{periodLabel}}不超过 {{habit.limit}} 次</view>
     </view>
   </view>
 
   <view class="form-card card">
     <!-- B1 日期 -->
     <view class="field">
-      <label>打卡日期</label>
+      <label>破戒日期</label>
       <picker mode="date" value="{{date}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onDateChange">
         <view class="input">
           <text class="num">{{dateText}}</text>
-          <text class="arrow">▾</text>
+          <text class="change">更改 ›</text>
         </view>
       </picker>
-      <view class="field-hint">最早可选：{{minDate}}（主题开始日期）</view>
+      <view class="field-hint">最早可选 {{minLabel}}（主题起点）</view>
     </view>
 
     <!-- B2 次数 -->
     <view class="field">
-      <label>本次破戒次数</label>
+      <label>本次破戒次数 <text class="req">*</text></label>
       <view class="stepper">
         <view class="step-btn" bindtap="minusCount">−</view>
         <view class="step-n num">{{count}}</view>
         <view class="step-btn" bindtap="plusCount">+</view>
       </view>
-      <view class="field-hint">一次记录代表一次破戒；同一天可多次记录，次数自动累加</view>
+      <view class="field-hint">同一天可多次记录，次数会自动累加</view>
     </view>
 
     <!-- B3 备注 -->
     <view class="field">
-      <label>备注 <text class="faint">（选填）</text></label>
+      <label>备注 <text class="faint">（可选）</text></label>
       <textarea
         class="note-area"
         value="{{note}}"

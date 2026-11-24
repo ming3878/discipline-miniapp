@@ -8,6 +8,8 @@ Page({
     loading: true,
     today: '',
     dateLabel: '',
+    greet: '',
+    total: 0,
     cards: []
   },
 
@@ -15,8 +17,26 @@ Page({
     const today = D.todayKey();
     this.setData({
       today,
-      dateLabel: `${today.slice(5, 7)}月${today.slice(8)}日 周${D.weekdayLabel(today)}`
+      dateLabel: this.fmtDateLabel(today),
+      greet: this.fmtGreet()
     });
+  },
+
+  // 文案对齐原型：11月24日 · 周二
+  fmtDateLabel(key) {
+    return `${Number(key.slice(5, 7))}月${Number(key.slice(8))}日 · 周${D.weekdayLabel(key)}`;
+  },
+
+  // 文案对齐原型：下午好，稳住。
+  fmtGreet() {
+    const h = new Date().getHours();
+    let word = '夜深了';
+    if (h >= 5 && h < 9) word = '早上好';
+    else if (h >= 9 && h < 12) word = '上午好';
+    else if (h >= 12 && h < 14) word = '中午好';
+    else if (h >= 14 && h < 18) word = '下午好';
+    else if (h >= 18 && h < 23) word = '晚上好';
+    return `${word}，稳住。`;
   },
 
   onShow() {
@@ -52,8 +72,9 @@ Page({
       this.setData({
         loading: false,
         cards,
+        total: cards.length,
         today,
-        dateLabel: `${today.slice(5, 7)}月${today.slice(8)}日 周${D.weekdayLabel(today)}`
+        dateLabel: this.fmtDateLabel(today)
       });
     } catch (err) {
       console.error('[首页] 加载失败', err);

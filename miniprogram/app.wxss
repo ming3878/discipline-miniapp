@@ -17,8 +17,9 @@ page {
   --sub: #6B7A72;
   --faint: #9AA096;
   --line: #EBE8DF;
-  --r: 32rpx;
-  --rs: 20rpx;
+  /* 圆角按原型 16px / 10px 换算：16×2.36≈38rpx，10×2.36≈24rpx */
+  --r: 38rpx;
+  --rs: 24rpx;
   background: var(--paper);
   color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
@@ -29,14 +30,15 @@ page {
 
 .page {
   min-height: 100vh;
-  padding: 24rpx 32rpx 60rpx;
+  /* 原型 body padding 4px 16px 16px，按 ×2.36 换算 */
+  padding: 10rpx 38rpx 60rpx;
   box-sizing: border-box;
 }
 
 .card {
   background: var(--surface);
   border-radius: var(--r);
-  padding: 32rpx;
+  padding: 38rpx;
   border: 1rpx solid var(--line);
 }
 
@@ -46,8 +48,8 @@ page {
 .chip {
   display: inline-flex;
   align-items: center;
-  font-size: 22rpx;
-  padding: 6rpx 18rpx;
+  font-size: 26rpx;
+  padding: 8rpx 20rpx;
   border-radius: 999rpx;
   font-weight: 600;
 }

@@ -1,9 +1,4 @@
 <view class="page habits-page">
-  <view class="page-head">
-    <view class="h-title">我的主题</view>
-    <view class="h-sub">管理你的戒断主题与目标</view>
-  </view>
-
   <view wx:if="{{loading}}" class="state-hint">加载中…</view>
 
   <block wx:else>

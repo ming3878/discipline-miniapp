@@ -35,7 +35,7 @@
       },
       {
         "pagePath": "pages/habits/habits",
-        "text": "习惯",
+        "text": "主题",
         "iconPath": "images/habits.png",
         "selectedIconPath": "images/habits-active.png"
       }
