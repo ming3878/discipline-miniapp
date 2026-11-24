@@ -112,8 +112,16 @@ Page({
     this.setData({ 'form.periodType': PERIODS[e.detail.value].key });
   },
 
-  onLimitInput(e) {
-    this.setData({ 'form.limit': e.detail.value });
+  // 上限次数计步器：范围 1~99
+  minusLimit() {
+    const cur = Number(this.data.form.limit) || 1;
+    if (cur <= 1) return;
+    this.setData({ 'form.limit': cur - 1 });
+  },
+  plusLimit() {
+    const cur = Number(this.data.form.limit) || 1;
+    if (cur >= 99) return;
+    this.setData({ 'form.limit': cur + 1 });
   },
 
   // ---------- 保存 ----------
