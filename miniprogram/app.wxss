@@ -9,6 +9,9 @@ page {
   --clay-soft: #F4E3DE;
   --sage: #5C8C6A;
   --sage-soft: #E7F0E9;
+  /* 未破戒色块专用：鼠尾草绿的中间调，比 sage-soft 明显、比 sage 轻，
+     用于首页周视图这种无文字的小色块（sage-soft 在暖白底上几乎看不出绿） */
+  --sage-mid: #7FBD91;
   --indigo: #3E6FB0;
   --indigo-soft: #E5EDF7;
   --mist: #DCDAD2;
@@ -81,7 +84,7 @@ page {
 /* 通用状态色块（A3 / 月历共用五态） */
 .s-broken { background: var(--clay); }
 .s-broken-2 { background: var(--clay-2); }
-.s-clean { background: var(--sage-soft); }
+.s-clean { background: var(--sage-mid); }
 .s-today { background: var(--indigo); }
 .s-future { background: var(--mist-soft); }
 .s-before { background: transparent; border: 1rpx dashed var(--mist); box-sizing: border-box; }
