@@ -82,6 +82,7 @@
 /* 原型 .save：padding 14、radius 12、font 14 */
 .save {
   width: 100%;
+  box-sizing: border-box; /* 缺这行会导致 100% + padding 撑破卡片右边界 */
   padding: 32rpx;
   border-radius: 28rpx;
   font-size: 32rpx;
