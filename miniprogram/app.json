@@ -8,16 +8,16 @@
     "pages/records/records"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#4F6EF7",
-    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#F6F4EE",
+    "navigationBarTextStyle": "black",
     "navigationBarTitleText": "自律打卡",
-    "backgroundColor": "#F4F6FB",
+    "backgroundColor": "#F6F4EE",
     "backgroundTextStyle": "dark",
     "enablePullDownRefresh": false
   },
   "tabBar": {
-    "color": "#9AA3B2",
-    "selectedColor": "#4F6EF7",
+    "color": "#9AA096",
+    "selectedColor": "#23463B",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [

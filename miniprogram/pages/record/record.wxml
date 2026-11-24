@@ -1,0 +1,50 @@
+<view class="page record-page">
+  <!-- 顶部主题条：明确在给谁记录 -->
+  <view wx:if="{{habit}}" class="target-strip">
+    <view class="emoji">{{habit.icon}}</view>
+    <view>
+      <view class="t">{{habit.name}}</view>
+      <view class="hint">正在为这个主题记录破戒</view>
+    </view>
+  </view>
+
+  <view class="form-card card">
+    <!-- B1 日期 -->
+    <view class="field">
+      <label>打卡日期</label>
+      <picker mode="date" value="{{date}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onDateChange">
+        <view class="input">
+          <text class="num">{{dateText}}</text>
+          <text class="arrow">▾</text>
+        </view>
+      </picker>
+      <view class="field-hint">最早可选：{{minDate}}（主题开始日期）</view>
+    </view>
+
+    <!-- B2 次数 -->
+    <view class="field">
+      <label>本次破戒次数</label>
+      <view class="stepper">
+        <view class="step-btn" bindtap="minusCount">−</view>
+        <view class="step-n num">{{count}}</view>
+        <view class="step-btn" bindtap="plusCount">+</view>
+      </view>
+      <view class="field-hint">一次记录代表一次破戒；同一天可多次记录，次数自动累加</view>
+    </view>
+
+    <!-- B3 备注 -->
+    <view class="field">
+      <label>备注 <text class="faint">（选填）</text></label>
+      <textarea
+        class="note-area"
+        value="{{note}}"
+        bindinput="onNoteInput"
+        placeholder="这次是因为什么？"
+        placeholder-class="ph"
+        maxlength="200"
+      ></textarea>
+    </view>
+
+    <view class="save" bindtap="save">{{saving ? '保存中…' : '保存记录'}}</view>
+  </view>
+</view>

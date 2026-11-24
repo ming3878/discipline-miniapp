@@ -1,0 +1,88 @@
+<view class="page detail-page" wx:if="{{habit && detail}}">
+  <!-- 主题头 -->
+  <view class="detail-head">
+    <view class="emoji">{{habit.icon}}</view>
+    <view>
+      <view class="dh-title">{{habit.name}}</view>
+      <view class="dh-sub">{{habit.subtitle || '坚持是一种选择'}}</view>
+    </view>
+  </view>
+
+  <!-- 6 项指标网格（3×2） -->
+  <view class="metrics">
+    <view class="metric">
+      <view class="k">习惯始于</view>
+      <view class="v sm num">{{detail.startDateDisplay}}</view>
+    </view>
+    <view class="metric">
+      <view class="k">当前已戒</view>
+      <view class="v num">{{detail.cleanDays}}<text class="u"> 天</text></view>
+    </view>
+    <view class="metric">
+      <view class="k">最长已戒</view>
+      <view class="v num">{{detail.longestDays}}<text class="u"> 天</text></view>
+    </view>
+    <view class="metric">
+      <view class="k">合计破戒</view>
+      <view class="v num clay">{{detail.total}}<text class="u"> 次</text></view>
+    </view>
+    <view class="metric">
+      <view class="k">达成目标</view>
+      <view class="v num">{{detail.achieved}}<text class="u"> 次</text></view>
+    </view>
+    <view class="metric link" bindtap="goRecords">
+      <view class="k">记录明细</view>
+      <view class="v sm">查看 ›</view>
+    </view>
+  </view>
+  <view class="metric-note">达成 = 已结束周期中破戒次数未超上限；当前进行中周期未计入</view>
+
+  <!-- 月历破戒图 -->
+  <view class="section-label">月历 · 破戒情况</view>
+  <view class="cal-card">
+    <view class="cal-head">
+      <view class="m num">{{monthLabel}}</view>
+      <view class="cal-nav">
+        <view class="cal-nav-btn {{canPrev ? '' : 'disabled'}}" bindtap="prevMonth">‹</view>
+        <view class="cal-nav-btn {{canNext ? '' : 'disabled'}}" bindtap="nextMonth">›</view>
+      </view>
+    </view>
+    <view class="cal-grid">
+      <view wx:for="{{['一','二','三','四','五','六','日']}}" wx:key="*this" class="cal-wd">{{item}}</view>
+      <block wx:for="{{weeks}}" wx:for-item="week" wx:for-index="wi" wx:key="wi">
+        <block wx:for="{{week}}" wx:for-item="cell" wx:for-index="ci" wx:key="ci">
+          <view wx:if="{{!cell}}" class="cal-cell empty-cell"></view>
+          <view
+            wx:else
+            class="cal-cell {{cell.state === 'broken' ? (cell.count > 1 ? 'c-broken-2' : 'c-broken') : (cell.state === 'clean' ? 'c-clean' : (cell.state === 'today' ? 'c-today' : (cell.state === 'beforeStart' ? 'c-before' : 'c-future')))}}"
+            data-key="{{cell.key}}"
+            bindtap="onCellTap"
+          >{{cell.day}}</view>
+        </block>
+      </block>
+    </view>
+    <view class="cal-legend">
+      <view><i class="lg c-broken"></i>破戒</view>
+      <view><i class="lg c-clean"></i>未破戒</view>
+      <view><i class="lg c-today"></i>今天</view>
+      <view><i class="lg c-future"></i>未来/起点前</view>
+    </view>
+  </view>
+
+  <!-- 日期详情弹窗 -->
+  <view wx:if="{{selectedCell}}" class="cell-mask" bindtap="closeCell">
+    <view class="cell-panel" catchtap="noop">
+      <view class="cell-date num">{{selectedCell}}</view>
+      <block wx:if="{{dayRecords.length > 0}}">
+        <view wx:for="{{dayRecords}}" wx:for-item="rec" wx:key="_id" class="cell-rec">
+          <view class="cell-rec-c num">破戒 {{rec.count}} 次</view>
+          <view wx:if="{{rec.note}}" class="cell-rec-note">{{rec.note}}</view>
+        </view>
+      </block>
+      <view wx:else class="cell-none">当日未破戒</view>
+      <view class="cell-close" bindtap="closeCell">关闭</view>
+    </view>
+  </view>
+</view>
+
+<view wx:else class="state-hint">加载中…</view>

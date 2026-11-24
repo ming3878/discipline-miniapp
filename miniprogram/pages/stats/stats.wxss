@@ -1,1 +1,82 @@
-/* 占位页样式 */
+.stats-page { padding-top: 16rpx; }
+.state-hint { text-align: center; color: var(--faint); font-size: 26rpx; padding: 80rpx 0; }
+
+.page-head { padding: 8rpx 4rpx 28rpx; }
+.h-title { font-size: 44rpx; font-weight: 700; letter-spacing: -.02em; }
+.h-sub { font-size: 24rpx; color: var(--faint); margin-top: 8rpx; }
+
+/* 4 项总览 */
+.sum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18rpx; }
+.sum {
+  background: var(--surface);
+  border: 1rpx solid var(--line);
+  border-radius: 26rpx;
+  padding: 28rpx;
+}
+.sum.big {
+  grid-column: span 2;
+  background: var(--pine);
+  border-color: var(--pine);
+  color: #fff;
+}
+.sum.big .k { color: rgba(255,255,255,.72); }
+.sum.big .v { color: #fff; font-size: 68rpx; }
+.sum.big .u { color: rgba(255,255,255,.6); }
+.sum.wide { grid-column: span 2; }
+.sum .k { font-size: 22rpx; color: var(--sub); margin-bottom: 16rpx; }
+.sum .v { font-size: 52rpx; font-weight: 700; color: var(--pine); line-height: 1; }
+.sum .v.sm { font-size: 34rpx; }
+.sum .v.clay, .clay { color: var(--clay); }
+.sum .u { font-size: 20rpx; color: var(--faint); font-weight: 400; }
+.big-note { font-size: 21rpx; color: rgba(255,255,255,.6); margin-top: 12rpx; }
+.faint { color: var(--faint); }
+
+/* 图形 */
+.chart {
+  background: var(--surface);
+  border: 1rpx solid var(--line);
+  border-radius: 26rpx;
+  padding: 28rpx;
+}
+.chart .ct { font-size: 24rpx; font-weight: 600; margin-bottom: 28rpx; }
+.chart-empty { text-align: center; color: var(--faint); font-size: 24rpx; padding: 40rpx 0; }
+
+/* 柱状图 */
+.bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 200rpx;
+  gap: 12rpx;
+  border-bottom: 1rpx solid var(--line);
+}
+.bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+.bar-col .bv {
+  width: 100%;
+  max-width: 44rpx;
+  border-radius: 10rpx 10rpx 0 0;
+  background: var(--pine);
+  min-height: 4rpx;
+}
+.bar-col .bv.hot { background: var(--clay); }
+.bar-col .bl { font-size: 19rpx; color: var(--faint); margin-top: 12rpx; }
+
+/* 横向条形图 */
+.hbar { margin-bottom: 22rpx; }
+.hbar .row { display: flex; justify-content: space-between; font-size: 22rpx; margin-bottom: 10rpx; }
+.hbar .track { height: 18rpx; background: var(--mist-soft); border-radius: 999rpx; overflow: hidden; }
+.hbar .fill { height: 100%; background: var(--sage); border-radius: 999rpx; }
+.hbar .fill.hot { background: var(--clay); }
+
+/* 空态 */
+.empty { text-align: center; padding: 120rpx 40rpx; }
+.empty-ic { font-size: 88rpx; color: var(--mist); line-height: 1; }
+.empty-title { font-size: 30rpx; font-weight: 600; margin-top: 24rpx; }
+.empty-sub { font-size: 24rpx; color: var(--sub); margin-top: 12rpx; }

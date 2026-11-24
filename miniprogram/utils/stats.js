@@ -109,7 +109,9 @@ function completedPeriods(habit, today) {
     }
   } else if (habit.periodType === 'week') {
     let start = D.weekStart(habit.startDate);
-    while (start < todayKey) {
+    const currentWeekStart = D.weekStart(todayKey);
+    // 进行中的当前周不计入：只枚举周一严格早于本周一的周期
+    while (start < currentWeekStart) {
       periods.push([start, D.weekEnd(start)]);
       start = D.shiftDay(start, 7);
     }

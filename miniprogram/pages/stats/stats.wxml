@@ -1,6 +1,68 @@
-<view class="page">
-  <view class="card">
-    <view class="section-title">统计</view>
-    <view class="muted">页面占位 · 需求确认后开发</view>
+<view class="page stats-page">
+  <view class="page-head">
+    <view class="h-title">总体统计</view>
+    <view class="h-sub">看清全局，判断是否在变好</view>
   </view>
+
+  <view wx:if="{{loading}}" class="state-hint">加载中…</view>
+
+  <view wx:elif="{{!hasData}}" class="empty">
+    <view class="empty-ic">◌</view>
+    <view class="empty-title">还没有统计数据</view>
+    <view class="empty-sub">创建主题并记录后，这里会显示趋势</view>
+  </view>
+
+  <block wx:else>
+    <!-- 4 项总览 -->
+    <view class="sum-grid">
+      <view class="sum big">
+        <view class="k">当前连续未破戒</view>
+        <view class="v num">{{summary.cleanDays}}<text class="u"> 天</text></view>
+        <view class="big-note">任一主题破戒即重新计时</view>
+      </view>
+      <view class="sum">
+        <view class="k">累计破戒</view>
+        <view class="v num clay">{{summary.totalCount}}<text class="u"> 次</text></view>
+      </view>
+      <view class="sum">
+        <view class="k">进行中主题</view>
+        <view class="v num">{{summary.habitCount}}<text class="u"> 个</text></view>
+      </view>
+      <view class="sum wide">
+        <view class="k">坚持最久的主题</view>
+        <view wx:if="{{summary.longest}}" class="v sm num">{{summary.longest.habit.icon}} {{summary.longest.habit.name}} · {{summary.longest.days}} 天</view>
+        <view wx:else class="v sm faint">—</view>
+      </view>
+    </view>
+
+    <!-- 图形①：近 6 月破戒趋势 -->
+    <view class="section-label">近 6 个月破戒趋势</view>
+    <view class="chart">
+      <view class="ct">总次数走势 · 按月汇总</view>
+      <view class="bars">
+        <view wx:for="{{trend.data}}" wx:key="month" class="bar-col">
+          <view class="bv num {{item.count > 0 && item.count === trend.max ? 'hot' : ''}}" style="height: {{trend.max > 0 ? (item.count / trend.max * 100) : 0}}%"></view>
+          <view class="bl num">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 图形②：本月各主题破戒对比 -->
+    <view class="section-label">本月各主题破戒对比</view>
+    <view class="chart">
+      <view class="ct">本月 · 按主题</view>
+      <view wx:if="{{compare.list.length === 0}}" class="chart-empty">暂无主题</view>
+      <view wx:else>
+        <view wx:for="{{compare.list}}" wx:key="index" class="hbar">
+          <view class="row">
+            <text>{{item.habit.icon}} {{item.habit.name}}</text>
+            <text class="num {{item.count === compare.max && item.count > 0 ? 'clay' : ''}}">{{item.count}} 次</text>
+          </view>
+          <view class="track">
+            <view class="fill {{item.count === compare.max && item.count > 0 ? 'hot' : ''}}" style="width: {{compare.max > 0 ? (item.count / compare.max * 100) : 0}}%"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
 </view>

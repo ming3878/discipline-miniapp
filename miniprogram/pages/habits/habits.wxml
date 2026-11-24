@@ -1,6 +1,99 @@
-<view class="page">
-  <view class="card">
-    <view class="section-title">习惯管理</view>
-    <view class="muted">页面占位 · 需求确认后开发</view>
+<view class="page habits-page">
+  <view class="page-head">
+    <view class="h-title">我的主题</view>
+    <view class="h-sub">管理你的戒断主题与目标</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="state-hint">加载中…</view>
+
+  <block wx:else>
+    <!-- 主题列表 -->
+    <view wx:for="{{habits}}" wx:key="_id" class="mgmt-item">
+      <view class="emoji">{{item.icon}}</view>
+      <view class="info">
+        <view class="nm">{{item.name}}</view>
+        <view class="meta num">{{item.periodType === 'day' ? '每天' : (item.periodType === 'week' ? '每周' : '每月')}} ≤ {{item.limit}} 次 · 始于 {{item.startDate}}</view>
+      </view>
+      <view class="icon-btn" data-index="{{index}}" bindtap="moveUp">↑</view>
+      <view class="icon-btn" data-index="{{index}}" bindtap="moveDown">↓</view>
+      <view class="icon-btn" data-id="{{item._id}}" bindtap="editHabit">✎</view>
+      <view class="icon-btn del" data-id="{{item._id}}" data-name="{{item.name}}" bindtap="deleteHabit">✕</view>
+    </view>
+
+    <!-- 新增入口 -->
+    <view class="add-dash" bindtap="addHabit">+ 新增主题</view>
+  </block>
+
+  <!-- 编辑/新增表单（内嵌弹层） -->
+  <view wx:if="{{showForm}}" class="form-mask" bindtap="closeForm">
+    <view class="form-panel" catchtap="noop">
+      <view class="form-head">
+        <view class="form-title">{{isEdit ? '编辑主题' : '新增主题'}}</view>
+        <view class="form-close" bindtap="closeForm">✕</view>
+      </view>
+
+      <scroll-view scroll-y class="form-body">
+        <!-- emoji 选择 -->
+        <view class="field">
+          <label>图标</label>
+          <view class="emoji-grid">
+            <view
+              wx:for="{{emojis}}"
+              wx:key="*this"
+              class="emoji-opt {{form.icon === item ? 'sel' : ''}}"
+              data-icon="{{item}}"
+              bindtap="pickEmoji"
+            >{{item}}</view>
+          </view>
+        </view>
+
+        <!-- 标题 -->
+        <view class="field">
+          <label>标题 <text class="req">*</text></label>
+          <input class="input" value="{{form.name}}" bindinput="onNameInput" placeholder="如：戒烟" placeholder-class="ph" maxlength="20" />
+        </view>
+
+        <!-- 副标题 -->
+        <view class="field">
+          <label>副标题 <text class="faint">（选填）</text></label>
+          <input class="input" value="{{form.subtitle}}" bindinput="onSubInput" placeholder="如：为了健康" placeholder-class="ph" maxlength="40" />
+        </view>
+
+        <!-- 开始日期 C4 -->
+        <view class="field">
+          <label>从哪天开始戒</label>
+          <picker mode="date" value="{{form.startDate}}" start="2000-01-01" end="{{editMaxDate}}" bindchange="onStartChange">
+            <view class="input">
+              <text class="num">{{form.startDate}}</text>
+              <text class="arrow">▾</text>
+            </view>
+          </picker>
+          <view wx:if="{{isEdit && editMaxDate}}" class="field-hint">不得晚于最早破戒记录 {{editMaxDate}}</view>
+        </view>
+
+        <!-- 周期 C5 -->
+        <view class="field">
+          <label>目标周期</label>
+          <picker mode="selector" range="{{periods}}" range-key="label" value="{{form.periodType === 'day' ? 0 : (form.periodType === 'week' ? 1 : 2)}}" bindchange="onPeriodChange">
+            <view class="input">
+              <text>{{form.periodType === 'day' ? '每天' : (form.periodType === 'week' ? '每周' : '每月')}}不超过 {{form.limit}} 次</text>
+              <text class="arrow">▾</text>
+            </view>
+          </picker>
+        </view>
+
+        <!-- 上限 X -->
+        <view class="field">
+          <label>上限次数 X</label>
+          <input class="input num" type="number" value="{{form.limit}}" bindinput="onLimitInput" placeholder="至少 1" placeholder-class="ph" />
+          <view class="field-hint">上限至少 1 次，破戒次数超过上限才算失败。完全戒断也设为 1。</view>
+        </view>
+      </scroll-view>
+
+      <view class="form-foot">
+        <view class="btn-cancel" bindtap="closeForm">取消</view>
+        <view class="btn-primary" bindtap="saveHabit">{{isEdit ? '保存修改' : '创建主题'}}</view>
+      </view>
+    </view>
   </view>
 </view>

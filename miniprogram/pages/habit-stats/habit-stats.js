@@ -1,0 +1,117 @@
+// 单卡统计页（FR-04）：6 项总览 + 月历破戒图
+const DB = require('../../utils/db.js');
+const S = require('../../utils/stats.js');
+const D = require('../../utils/date.js');
+
+Page({
+  data: {
+    habitId: '',
+    habit: null,
+    detail: null,
+    month: '',        // 当前浏览月份 YYYY-MM
+    monthLabel: '',
+    weeks: [],
+    canPrev: false,
+    canNext: false,
+    selectedCell: null,  // 点击日期的详情弹窗
+    dayRecords: []
+  },
+
+  async onLoad(options) {
+    const habitId = options.id || '';
+    this.setData({ habitId });
+    if (!habitId) {
+      wx.showToast({ title: '主题不存在', icon: 'none' });
+      return;
+    }
+    await this.loadData();
+  },
+
+  onShow() {
+    // 从记录明细删除后返回，重新计算统计
+    if (this.data.habitId) this.loadData();
+  },
+
+  async loadData() {
+    try {
+      const today = D.todayKey();
+      const [habit, records] = await Promise.all([
+        DB.getHabitById(this.data.habitId),
+        DB.getAllCheckins()
+      ]);
+      if (!habit) {
+        wx.showToast({ title: '主题不存在', icon: 'none' });
+        return;
+      }
+      const month = this.data.month || today.slice(0, 7);
+      const detail = S.habitDetail(habit, records, today);
+      // WXML 不支持 .slice()，在 JS 层预处理显示用日期
+      detail.startDateDisplay = detail.startDate.slice(5);
+      this.setData({
+        habit,
+        detail,
+        today
+      });
+      this.buildMonth(month, habit, records, today);
+      wx.setNavigationBarTitle({ title: habit.name + ' · 统计' });
+    } catch (err) {
+      console.error('[单卡统计] 加载失败', err);
+      wx.showToast({ title: '加载失败', icon: 'none' });
+    }
+  },
+
+  // 构建月历网格
+  buildMonth(month, habit, records, today) {
+    const weeks = S.monthCells(habit, records, month, today);
+    const minMonth = habit.startDate.slice(0, 7);
+    const maxMonth = today.slice(0, 7);
+    this.setData({
+      month,
+      monthLabel: `${Number(month.slice(0, 4))} 年 ${Number(month.slice(5))} 月`,
+      weeks,
+      canPrev: month > minMonth,
+      canNext: month < maxMonth
+    });
+  },
+
+  prevMonth() {
+    if (!this.data.canPrev) return;
+    const month = D.shiftMonth(this.data.month, -1);
+    this.rebuildMonth(month);
+  },
+
+  nextMonth() {
+    if (!this.data.canNext) return;
+    const month = D.shiftMonth(this.data.month, 1);
+    this.rebuildMonth(month);
+  },
+
+  async rebuildMonth(month) {
+    const [habit, records] = await Promise.all([
+      DB.getHabitById(this.data.habitId),
+      DB.getAllCheckins()
+    ]);
+    this.buildMonth(month, habit, records, D.todayKey());
+  },
+
+  // 点击月历某日：显示当日详情
+  async onCellTap(e) {
+    const key = e.currentTarget.dataset.key;
+    if (!key) return;
+    const records = await DB.getAllCheckins();
+    const dayRecords = records.filter(
+      (r) => r.habitId === this.data.habitId && r.date === key
+    );
+    this.setData({ selectedCell: key, dayRecords });
+  },
+
+  closeCell() {
+    this.setData({ selectedCell: null, dayRecords: [] });
+  },
+
+  noop() {},
+
+  goRecords() {
+    wx.navigateTo({ url: `/pages/records/records?id=${this.data.habitId}` });
+  }
+});

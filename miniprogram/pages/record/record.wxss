@@ -1,0 +1,85 @@
+.record-page { padding-top: 12rpx; }
+
+.target-strip {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx 28rpx;
+  background: var(--sage-soft);
+  border-radius: 24rpx;
+  margin-bottom: 28rpx;
+}
+.target-strip .emoji {
+  width: 72rpx; height: 72rpx; border-radius: 20rpx;
+  background: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: 36rpx;
+}
+.target-strip .t { font-size: 26rpx; font-weight: 600; color: var(--pine); }
+.target-strip .hint { font-size: 22rpx; color: var(--sage); margin-top: 4rpx; }
+
+.form-card { padding: 36rpx 32rpx; }
+
+.field { margin-bottom: 40rpx; }
+.field:last-of-type { margin-bottom: 24rpx; }
+.field label { display: block; font-size: 24rpx; font-weight: 600; margin-bottom: 16rpx; color: var(--ink); }
+.field .req { color: var(--clay); }
+.field-hint { font-size: 20rpx; color: var(--faint); margin-top: 12rpx; line-height: 1.5; }
+
+.input {
+  width: 100%;
+  border: 1rpx solid var(--line);
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 26rpx 28rpx;
+  font-size: 28rpx;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.input .arrow { color: var(--faint); font-size: 24rpx; }
+.input .ph { color: var(--faint); }
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1rpx solid var(--line);
+  border-radius: 20rpx;
+  background: #fff;
+  padding: 10rpx;
+}
+.step-btn {
+  width: 72rpx; height: 72rpx; border-radius: 16rpx;
+  background: var(--paper); color: var(--pine);
+  font-size: 40rpx; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  border: 1rpx solid var(--line);
+}
+.step-n { font-size: 40rpx; font-weight: 700; color: var(--ink); }
+
+.note-area {
+  width: 100%;
+  min-height: 152rpx;
+  border: 1rpx solid var(--line);
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx 28rpx;
+  font-size: 26rpx;
+  color: var(--ink);
+  box-sizing: border-box;
+}
+.ph { color: var(--faint); }
+
+.save {
+  width: 100%;
+  padding: 28rpx;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #fff;
+  background: var(--pine);
+  text-align: center;
+  margin-top: 8rpx;
+}

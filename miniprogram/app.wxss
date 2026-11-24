@@ -1,61 +1,83 @@
+/* 全局设计令牌 · 暖纸墨绿（对齐 design/界面设计规范.md） */
 page {
-  --primary: #4F6EF7;
-  --primary-light: #EEF1FF;
-  --success: #22B07D;
-  --danger: #E5544B;
-  --text: #1F2430;
-  --text-sub: #8A93A5;
-  --bg: #F4F6FB;
-  --card: #FFFFFF;
-  background: var(--bg);
-  color: var(--text);
+  --paper: #F6F4EE;
+  --surface: #FFFFFF;
+  --pine: #23463B;
+  --pine-2: #2F5A4C;
+  --clay: #C0533B;
+  --clay-2: #9C3F2C;
+  --clay-soft: #F4E3DE;
+  --sage: #5C8C6A;
+  --sage-soft: #E7F0E9;
+  --indigo: #3E6FB0;
+  --indigo-soft: #E5EDF7;
+  --mist: #DCDAD2;
+  --mist-soft: #F0EFE9;
+  --ink: #1F2A26;
+  --sub: #6B7A72;
+  --faint: #9AA096;
+  --line: #EBE8DF;
+  --r: 32rpx;
+  --rs: 20rpx;
+  background: var(--paper);
+  color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
 }
 
+/* 数字等宽对齐 */
+.num { font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+
 .page {
   min-height: 100vh;
-  padding: 32rpx 28rpx 60rpx;
+  padding: 24rpx 32rpx 60rpx;
   box-sizing: border-box;
 }
 
 .card {
-  background: var(--card);
-  border-radius: 24rpx;
+  background: var(--surface);
+  border-radius: var(--r);
   padding: 32rpx;
-  box-shadow: 0 8rpx 30rpx rgba(31, 36, 48, 0.05);
+  border: 1rpx solid var(--line);
 }
 
-.section-title {
-  font-size: 30rpx;
+.muted { color: var(--sub); }
+.faint { color: var(--faint); }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 22rpx;
+  padding: 6rpx 18rpx;
+  border-radius: 999rpx;
   font-weight: 600;
-  color: var(--text);
-  margin: 8rpx 0 24rpx;
 }
-
-.muted {
-  color: var(--text-sub);
-  font-size: 24rpx;
-}
+.chip-ok { background: var(--sage-soft); color: var(--sage); }
+.chip-over { background: var(--clay-soft); color: var(--clay); }
 
 .btn-primary {
-  background: var(--primary);
+  background: var(--pine);
   color: #fff;
-  border-radius: 16rpx;
+  border-radius: var(--rs);
   font-size: 28rpx;
-  font-weight: 500;
-  padding: 18rpx 0;
+  font-weight: 600;
+  padding: 22rpx 0;
   text-align: center;
-}
-
-.btn-primary::after {
   border: none;
 }
+.btn-primary::after { border: none; }
 
-.btn-ghost {
-  background: var(--primary-light);
-  color: var(--primary);
-  border-radius: 14rpx;
-  font-size: 26rpx;
-  padding: 14rpx 0;
-  text-align: center;
+.section-label {
+  font-size: 20rpx;
+  letter-spacing: .08em;
+  color: var(--faint);
+  font-weight: 600;
+  margin: 36rpx 4rpx 20rpx;
 }
+
+/* 通用状态色块（A3 / 月历共用五态） */
+.s-broken { background: var(--clay); }
+.s-broken-2 { background: var(--clay-2); }
+.s-clean { background: var(--sage-soft); }
+.s-today { background: var(--indigo); }
+.s-future { background: var(--mist-soft); }
+.s-before { background: transparent; border: 1rpx dashed var(--mist); box-sizing: border-box; }

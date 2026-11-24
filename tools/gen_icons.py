@@ -10,8 +10,8 @@ S = 2  # 超采样倍数
 OUT_SIZE = 81  # 输出尺寸（tabBar 标准）
 SIZE = OUT_SIZE * S  # 采样画布
 
-GRAY = (154, 163, 178, 255)
-BLUE = (79, 110, 247, 255)
+GRAY = (154, 160, 150, 255)   # --faint #9AA096 未选中
+BLUE = (35, 70, 59, 255)      # --pine #23463B 选中
 TRANSPARENT = (0, 0, 0, 0)
 
 
@@ -116,5 +116,5 @@ os.makedirs(OUT, exist_ok=True)
 for name, fn in SHAPES.items():
     for suffix, color in (("", GRAY), ("-active", BLUE)):
         path = os.path.join(OUT, f"{name}{suffix}.png")
-        write_png(path, render(fn, color), SIZE)
+        write_png(path, render(fn, color), OUT_SIZE)
         print("generated", os.path.basename(path))

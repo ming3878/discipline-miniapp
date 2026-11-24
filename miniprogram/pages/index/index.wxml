@@ -1,6 +1,66 @@
-<view class="page">
-  <view class="card">
-    <view class="section-title">今日打卡</view>
-    <view class="muted">页面占位 · 需求确认后开发</view>
+<view class="page index-page">
+  <!-- 顶部问候 -->
+  <view class="hero">
+    <view class="date num">{{dateLabel}}</view>
+    <view class="greet">今天，也要清醒地活着</view>
+    <view class="hero-sub">记录破戒，是为了看清自己</view>
   </view>
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="state-hint">加载中…</view>
+
+  <!-- 空态 -->
+  <view wx:elif="{{cards.length === 0}}" class="empty" bindtap="goHabits">
+    <view class="empty-ic">◌</view>
+    <view class="empty-title">还没有主题</view>
+    <view class="empty-sub">点此创建第一个戒断主题</view>
+    <view class="empty-btn">去创建 +</view>
+  </view>
+
+  <!-- 记录卡列表 -->
+  <block wx:else>
+    <view
+      wx:for="{{cards}}"
+      wx:key="id"
+      class="habit"
+      data-id="{{item.id}}"
+      bindtap="goDetail"
+    >
+      <!-- 标题行：emoji + 标题 + 状态徽章 -->
+      <view class="habit-top">
+        <view class="habit-id">
+          <view class="emoji">{{item.icon}}</view>
+          <view>
+            <view class="habit-name">{{item.name}}</view>
+            <view wx:if="{{item.subtitle}}" class="habit-sub">{{item.subtitle}}</view>
+          </view>
+        </view>
+        <view class="chip {{item.overLimit ? 'chip-over' : 'chip-ok'}}">
+          {{item.overLimit ? '已超限' : '正常'}}
+        </view>
+      </view>
+
+      <!-- 当前已戒天数（视觉焦点） -->
+      <view class="streak-row">
+        <text class="streak-num num">{{item.cleanDays}}</text>
+        <text class="streak-unit">天未破戒</text>
+      </view>
+
+      <!-- A3 一周五日状态条 -->
+      <view class="week">
+        <view wx:for="{{item.weekCells}}" wx:for-item="cell" wx:key="key" class="day">
+          <view class="lbl {{cell.key === today ? 'today' : ''}}">{{cell.label}}</view>
+          <view class="bar {{cell.state === 'broken' ? (cell.count > 1 ? 's-broken-2' : 's-broken') : (cell.state === 'clean' ? 's-clean' : (cell.state === 'today' ? 's-today' : (cell.state === 'beforeStart' ? 's-before' : 's-future')))}}"></view>
+        </view>
+      </view>
+
+      <!-- 底部：周期次数 + 记录按钮 -->
+      <view class="habit-foot">
+        <view class="cnt">
+          {{item.periodName}}破戒 <b class="num {{item.overLimit ? 'cnt-clay' : ''}}">{{item.periodCount}}</b> / {{item.limit}} 次
+        </view>
+        <view class="rec-btn" data-id="{{item.id}}" catchtap="goRecord">记一次 +</view>
+      </view>
+    </view>
+  </block>
 </view>

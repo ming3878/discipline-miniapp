@@ -1,0 +1,39 @@
+.records-page { padding-top: 12rpx; }
+
+.filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1rpx solid var(--line);
+  border-radius: 20rpx;
+  padding: 24rpx 28rpx;
+  font-size: 26rpx;
+  margin: 4rpx 0 28rpx;
+}
+.filter .arr { color: var(--faint); }
+
+.log-item {
+  background: var(--surface);
+  border: 1rpx solid var(--line);
+  border-radius: 24rpx;
+  padding: 26rpx 28rpx;
+  margin-bottom: 18rpx;
+  display: flex;
+  align-items: flex-start;
+  gap: 22rpx;
+}
+.log-date { text-align: center; min-width: 76rpx; }
+.log-date .d { font-size: 38rpx; font-weight: 700; color: var(--ink); line-height: 1; }
+.log-date .m { font-size: 20rpx; color: var(--faint); margin-top: 6rpx; }
+.log-main { flex: 1; border-left: 1rpx solid var(--line); padding-left: 24rpx; min-width: 0; }
+.log-main .c { font-size: 24rpx; font-weight: 600; color: var(--pine); }
+.log-main .note { font-size: 22rpx; color: var(--sub); margin-top: 8rpx; line-height: 1.5; }
+.log-del { color: var(--clay); font-size: 22rpx; align-self: center; padding: 12rpx; }
+
+.list-total { text-align: center; font-size: 20rpx; color: var(--faint); margin-top: 28rpx; }
+
+.empty { text-align: center; padding: 120rpx 40rpx; }
+.empty-ic { font-size: 88rpx; color: var(--mist); line-height: 1; }
+.empty-title { font-size: 30rpx; font-weight: 600; margin-top: 24rpx; }
+.empty-sub { font-size: 24rpx; color: var(--sub); margin-top: 12rpx; }
