@@ -54,9 +54,10 @@
 .streak-num { font-size: 68rpx; font-weight: 700; color: var(--pine); line-height: 1; }
 .streak-unit { font-size: 24rpx; color: var(--sub); }
 
-/* 一周状态条 */
-.week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10rpx; margin-top: 24rpx; }
-.day { text-align: center; }
+/* 一周状态条：flex + 百分比宽度（小程序对 grid 支持不稳，避免错位） */
+.week { display: flex; margin-top: 24rpx; }
+.week .day { flex: 1 1 0; min-width: 0; text-align: center; margin-right: 10rpx; }
+.week .day:last-child { margin-right: 0; }
 .day .lbl { font-size: 20rpx; color: var(--faint); margin-bottom: 10rpx; }
 .day .lbl.today { color: var(--pine); font-weight: 700; }
 .bar { height: 40rpx; border-radius: 10rpx; }

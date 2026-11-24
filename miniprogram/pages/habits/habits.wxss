@@ -70,7 +70,7 @@
 }
 .form-title { font-size: 32rpx; font-weight: 700; }
 .form-close { font-size: 30rpx; color: var(--sub); padding: 8rpx 16rpx; }
-.form-body { padding: 8rpx 36rpx; max-height: 64vh; }
+.form-body { flex: 1 1 auto; min-height: 0; padding: 8rpx 36rpx 4rpx; }
 .form-foot {
   display: flex;
   gap: 20rpx;
@@ -96,12 +96,27 @@
 .field .faint { color: var(--faint); font-weight: 400; }
 .field-hint { font-size: 20rpx; color: var(--faint); margin-top: 10rpx; line-height: 1.5; }
 
-.input {
+/* 原生 input 必须定高 + 行高，不能用 flex（微信里会裁切文字） */
+.field-input {
   width: 100%;
-  border: 1rpx solid var(--line);
+  height: 92rpx;
+  line-height: 92rpx;
+  padding: 0 28rpx;
+  border: 2rpx solid var(--mist);
   background: #fff;
   border-radius: 20rpx;
-  padding: 24rpx 28rpx;
+  font-size: 28rpx;
+  color: var(--ink);
+  box-sizing: border-box;
+}
+
+/* picker 展示行（纯 view，可用 flex 做左右分布） */
+.input {
+  width: 100%;
+  border: 2rpx solid var(--mist);
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 25rpx 28rpx;
   font-size: 28rpx;
   color: var(--ink);
   display: flex;
@@ -112,15 +127,31 @@
 .input .arrow { color: var(--faint); font-size: 24rpx; }
 .ph { color: var(--faint); }
 
-.emoji-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 12rpx; }
+/* emoji 横向滑动条 */
+.emoji-scroll {
+  width: 100%;
+  height: 104rpx;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
 .emoji-opt {
-  aspect-ratio: 1;
-  border-radius: 14rpx;
-  background: var(--surface);
-  border: 1rpx solid var(--line);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 34rpx;
+  width: 92rpx;
+  height: 92rpx;
+  margin-right: 12rpx;
+  flex: 0 0 auto;
+  border-radius: 16rpx;
+  background: var(--surface);
+  border: 2rpx solid var(--line);
+  font-size: 40rpx;
+  vertical-align: top;
+  box-sizing: border-box;
 }
-.emoji-opt.sel { border: 2rpx solid var(--pine); background: var(--sage-soft); }
+.emoji-opt:last-child { margin-right: 0; }
+.emoji-opt.sel {
+  border-color: var(--pine);
+  background: var(--sage-soft);
+  box-shadow: 0 0 0 2rpx rgba(35, 70, 59, .18);
+}

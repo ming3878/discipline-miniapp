@@ -12,14 +12,18 @@
 .dh-title { font-size: 40rpx; font-weight: 700; }
 .dh-sub { font-size: 22rpx; color: var(--sub); margin-top: 6rpx; }
 
-/* 指标网格 */
-.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16rpx; }
+/* 指标网格：flex 换行 + 三等分（避免 grid 在小程序端的错位） */
+.metrics { display: flex; flex-wrap: wrap; }
 .metric {
+  width: calc((100% - 32rpx) / 3);
+  margin: 0 16rpx 16rpx 0;
+  box-sizing: border-box;
   background: var(--surface);
   border: 1rpx solid var(--line);
   border-radius: 24rpx;
   padding: 24rpx 20rpx;
 }
+.metric:nth-child(3n) { margin-right: 0; }
 .metric .k { font-size: 21rpx; color: var(--sub); margin-bottom: 12rpx; }
 .metric .v { font-size: 40rpx; font-weight: 700; color: var(--pine); line-height: 1; }
 .metric .v.sm { font-size: 30rpx; }
@@ -45,10 +49,18 @@
   font-size: 32rpx; color: var(--sub);
 }
 .cal-nav-btn.disabled { color: var(--mist); }
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10rpx; }
-.cal-wd { text-align: center; font-size: 20rpx; color: var(--faint); padding-bottom: 12rpx; }
+/* 月历：flex 换行，每行固定 7 格（不用 grid，避免错位） */
+.cal-grid { display: flex; flex-wrap: wrap; }
+.cal-wd {
+  width: calc((100% - 60rpx) / 7);
+  margin-right: 10rpx;
+  text-align: center; font-size: 20rpx; color: var(--faint); padding-bottom: 12rpx;
+}
 .cal-cell {
-  aspect-ratio: 1;
+  width: calc((100% - 60rpx) / 7);
+  height: 82rpx;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
   border-radius: 16rpx;
   display: flex;
   align-items: center;
@@ -56,6 +68,8 @@
   font-size: 22rpx;
   font-weight: 600;
 }
+/* 每行第 7 格去掉右外边距，保证 7 格正好铺满一行 */
+.cal-wd:nth-child(7n), .cal-cell:nth-child(7n) { margin-right: 0; }
 .empty-cell { background: transparent; }
 .c-clean { background: var(--sage-soft); color: var(--sage); }
 .c-broken { background: var(--clay); color: #fff; }

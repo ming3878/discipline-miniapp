@@ -27,10 +27,10 @@
 
 .input {
   width: 100%;
-  border: 1rpx solid var(--line);
+  border: 2rpx solid var(--mist);
   background: #fff;
   border-radius: 20rpx;
-  padding: 26rpx 28rpx;
+  padding: 25rpx 28rpx;
   font-size: 28rpx;
   color: var(--ink);
   display: flex;
@@ -61,11 +61,12 @@
 
 .note-area {
   width: 100%;
-  min-height: 152rpx;
-  border: 1rpx solid var(--line);
+  height: 176rpx;
+  line-height: 1.6;
+  border: 2rpx solid var(--mist);
   background: #fff;
   border-radius: 20rpx;
-  padding: 24rpx 28rpx;
+  padding: 22rpx 28rpx;
   font-size: 26rpx;
   color: var(--ink);
   box-sizing: border-box;
