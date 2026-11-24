@@ -17,9 +17,9 @@ page {
   --sub: #6B7A72;
   --faint: #9AA096;
   --line: #EBE8DF;
-  /* 圆角按原型 16px / 10px 换算：16×2.36≈38rpx，10×2.36≈24rpx */
+  /* 圆角按原型 16px / 11px 换算：16×2.36≈38rpx，11×2.36≈26rpx */
   --r: 38rpx;
-  --rs: 24rpx;
+  --rs: 26rpx;
   background: var(--paper);
   color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
@@ -56,24 +56,26 @@ page {
 .chip-ok { background: var(--sage-soft); color: var(--sage); }
 .chip-over { background: var(--clay-soft); color: var(--clay); }
 
+/* 原型 .btn：padding 11/16、radius 11、font 13 */
 .btn-primary {
   background: var(--pine);
   color: #fff;
   border-radius: var(--rs);
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-weight: 600;
-  padding: 22rpx 0;
+  padding: 26rpx 0;
   text-align: center;
   border: none;
 }
 .btn-primary::after { border: none; }
 
+/* 原型 .sec-label：font 11、margin 18/2/10 */
 .section-label {
-  font-size: 20rpx;
+  font-size: 26rpx;
   letter-spacing: .08em;
   color: var(--faint);
   font-weight: 600;
-  margin: 36rpx 4rpx 20rpx;
+  margin: 42rpx 5rpx 24rpx;
 }
 
 /* 通用状态色块（A3 / 月历共用五态） */

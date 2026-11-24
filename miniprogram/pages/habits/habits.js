@@ -9,6 +9,7 @@ const PERIODS = [
   { key: 'month', label: '每月' }
 ];
 const PERIOD_UNIT = { day: '天', week: '周', month: '月' };
+const PERIOD_TEXT = { day: '每天', week: '每周', month: '每月' };
 
 Page({
   data: {
@@ -37,7 +38,12 @@ Page({
     this.setData({ loading: true });
     try {
       const today = D.todayKey();
-      const [habits, records] = await Promise.all([DB.getHabits(), DB.getAllCheckins()]);
+      const [habitsRaw, records] = await Promise.all([DB.getHabits(), DB.getAllCheckins()]);
+      // WXML 不支持 .slice()，列表展示用的短日期与周期文案在此预处理
+      const habits = habitsRaw.map((h) => Object.assign({}, h, {
+        startShort: h.startDate ? h.startDate.slice(5) : '',
+        periodText: PERIOD_TEXT[h.periodType] || '每周'
+      }));
       // 每个主题的最早破戒日期（编辑 C4 时作为上限）
       const earliest = {};
       for (const h of habits) {
@@ -184,9 +190,12 @@ Page({
   },
 
   // ---------- 删除 ----------
-  async deleteHabit(e) {
-    const id = e.currentTarget.dataset.id;
-    const name = e.currentTarget.dataset.name;
+  deleteHabit(e) {
+    const { id, name } = e.currentTarget.dataset;
+    this.doDelete(id, name);
+  },
+
+  async doDelete(id, name) {
     const confirmed = await this.confirm(`确定删除「${name}」？该主题的全部破戒记录也会一并删除，且不可恢复。`);
     if (!confirmed) return;
     try {
@@ -199,20 +208,34 @@ Page({
     }
   },
 
-  // ---------- 排序 ----------
-  async moveUp(e) {
-    const index = Number(e.currentTarget.dataset.index);
-    if (index <= 0) return;
-    const ids = this.data.habits.map((h) => h._id);
-    [ids[index - 1], ids[index]] = [ids[index], ids[index - 1]];
-    await this.applyOrder(ids);
+  // ---------- 更多操作（上移 / 下移 / 删除） ----------
+  moreActions(e) {
+    const { index, id, name } = e.currentTarget.dataset;
+    wx.showActionSheet({
+      itemList: ['上移', '下移', '删除'],
+      success: (res) => {
+        if (res.tapIndex === 0) this.moveTo(Number(index), -1);
+        else if (res.tapIndex === 1) this.moveTo(Number(index), 1);
+        else this.doDelete(id, name);
+      },
+      fail: () => {}
+    });
   },
 
-  async moveDown(e) {
-    const index = Number(e.currentTarget.dataset.index);
-    if (index >= this.data.habits.length - 1) return;
-    const ids = this.data.habits.map((h) => h._id);
-    [ids[index + 1], ids[index]] = [ids[index], ids[index + 1]];
+  // ---------- 排序 ----------
+  async moveTo(index, delta) {
+    const list = this.data.habits;
+    const target = index + delta;
+    if (target < 0) {
+      wx.showToast({ title: '已经是第一个', icon: 'none' });
+      return;
+    }
+    if (target >= list.length) {
+      wx.showToast({ title: '已经是最后一个', icon: 'none' });
+      return;
+    }
+    const ids = list.map((h) => h._id);
+    [ids[index], ids[target]] = [ids[target], ids[index]];
     await this.applyOrder(ids);
   },
 

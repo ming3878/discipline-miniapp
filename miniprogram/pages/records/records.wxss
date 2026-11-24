@@ -1,39 +1,44 @@
-.records-page { padding-top: 12rpx; }
+/* 记录明细页 · 数值按原型 px × 2.36 换算，与设计稿等比例 */
+.records-page { padding-top: 14rpx; }
 
+/* 原型 .filter：padding 11/14、radius 11、font 13、margin 6/0/14 */
 .filter {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: var(--surface);
   border: 1rpx solid var(--line);
-  border-radius: 20rpx;
-  padding: 24rpx 28rpx;
-  font-size: 26rpx;
-  margin: 4rpx 0 28rpx;
+  border-radius: 26rpx;
+  padding: 26rpx 33rpx;
+  font-size: 31rpx;
+  margin: 14rpx 0 33rpx;
 }
 .filter .arr { color: var(--faint); }
 
+/* 原型 .log-item：padding 13/14、radius 12、margin-bottom 9、gap 11 */
 .log-item {
   background: var(--surface);
   border: 1rpx solid var(--line);
-  border-radius: 24rpx;
-  padding: 26rpx 28rpx;
-  margin-bottom: 18rpx;
+  border-radius: 28rpx;
+  padding: 31rpx 33rpx;
+  margin-bottom: 21rpx;
   display: flex;
   align-items: flex-start;
-  gap: 22rpx;
+  gap: 26rpx;
 }
-.log-date { text-align: center; min-width: 76rpx; }
-.log-date .d { font-size: 38rpx; font-weight: 700; color: var(--ink); line-height: 1; }
-.log-date .m { font-size: 20rpx; color: var(--faint); margin-top: 6rpx; }
-.log-main { flex: 1; border-left: 1rpx solid var(--line); padding-left: 24rpx; min-width: 0; }
-.log-main .c { font-size: 24rpx; font-weight: 600; color: var(--pine); }
-.log-main .note { font-size: 22rpx; color: var(--sub); margin-top: 8rpx; line-height: 1.5; }
-.log-del { color: var(--clay); font-size: 22rpx; align-self: center; padding: 12rpx; }
+/* 原型 .log-date：min-width 40；.d 19；.m 10 */
+.log-date { text-align: center; min-width: 94rpx; }
+.log-date .d { font-size: 45rpx; font-weight: 700; color: var(--ink); line-height: 1; }
+.log-date .m { font-size: 24rpx; color: var(--faint); margin-top: 5rpx; }
+/* 原型 .log-main：padding-left 12、竖线分隔；.c 12；.note 11 */
+.log-main { flex: 1; border-left: 1rpx solid var(--line); padding-left: 28rpx; min-width: 0; }
+.log-main .c { font-size: 28rpx; font-weight: 600; color: var(--pine); }
+.log-main .note { font-size: 26rpx; color: var(--sub); margin-top: 7rpx; line-height: 1.5; }
+.log-del { color: var(--clay); font-size: 26rpx; align-self: center; padding: 12rpx 0 12rpx 12rpx; }
 
-.list-total { text-align: center; font-size: 20rpx; color: var(--faint); margin-top: 28rpx; }
+.list-total { text-align: center; font-size: 26rpx; color: var(--faint); margin-top: 33rpx; }
 
-.empty { text-align: center; padding: 120rpx 40rpx; }
-.empty-ic { font-size: 88rpx; color: var(--mist); line-height: 1; }
-.empty-title { font-size: 30rpx; font-weight: 600; margin-top: 24rpx; }
-.empty-sub { font-size: 24rpx; color: var(--sub); margin-top: 12rpx; }
+.empty { text-align: center; padding: 140rpx 40rpx; }
+.empty-ic { font-size: 90rpx; color: var(--mist); line-height: 1; }
+.empty-title { font-size: 32rpx; font-weight: 600; margin-top: 26rpx; }
+.empty-sub { font-size: 26rpx; color: var(--sub); margin-top: 12rpx; }

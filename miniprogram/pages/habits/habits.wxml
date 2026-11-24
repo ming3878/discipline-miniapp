@@ -2,21 +2,26 @@
   <view wx:if="{{loading}}" class="state-hint">加载中…</view>
 
   <block wx:else>
-    <!-- 主题列表 -->
+    <!-- 空态 -->
+    <view wx:if="{{habits.length === 0}}" class="empty">
+      <view class="empty-ic">◌</view>
+      <view class="empty-title">还没有主题</view>
+      <view class="empty-sub">先建一个想戒掉的习惯，从今天开始算</view>
+    </view>
+
+    <!-- 主题列表：编辑 + 更多（上移/下移/删除） -->
     <view wx:for="{{habits}}" wx:key="_id" class="mgmt-item">
       <view class="emoji">{{item.icon}}</view>
       <view class="info">
         <view class="nm">{{item.name}}</view>
-        <view class="meta num">{{item.periodType === 'day' ? '每天' : (item.periodType === 'week' ? '每周' : '每月')}} ≤ {{item.limit}} 次 · 始于 {{item.startDate}}</view>
+        <view class="meta num">始于 {{item.startShort}} · {{item.periodText}} ≤ {{item.limit}} 次</view>
       </view>
-      <view class="icon-btn" data-index="{{index}}" bindtap="moveUp">↑</view>
-      <view class="icon-btn" data-index="{{index}}" bindtap="moveDown">↓</view>
       <view class="icon-btn" data-id="{{item._id}}" bindtap="editHabit">✎</view>
-      <view class="icon-btn del" data-id="{{item._id}}" data-name="{{item.name}}" bindtap="deleteHabit">✕</view>
+      <view class="icon-btn" data-index="{{index}}" data-id="{{item._id}}" data-name="{{item.name}}" bindtap="moreActions">⋮⋮</view>
     </view>
 
     <!-- 新增入口 -->
-    <view class="add-dash" bindtap="addHabit">+ 新增主题</view>
+    <view class="add-dash" bindtap="addHabit">＋ 新增主题</view>
   </block>
 
   <!-- 编辑/新增表单（内嵌弹层） -->

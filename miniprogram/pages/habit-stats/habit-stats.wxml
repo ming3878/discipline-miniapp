@@ -2,9 +2,9 @@
   <!-- 主题头 -->
   <view class="detail-head">
     <view class="emoji">{{habit.icon}}</view>
-    <view>
+    <view class="dh-info">
       <view class="dh-title">{{habit.name}}</view>
-      <view class="dh-sub">{{habit.subtitle || '坚持是一种选择'}}</view>
+      <view class="dh-sub">{{habit.periodLabel}} · 始于 {{detail.startDateDisplay}}</view>
     </view>
   </view>
 
@@ -38,15 +38,15 @@
   <view class="metric-note">达成 = 已结束周期中破戒次数未超上限；当前进行中周期未计入</view>
 
   <!-- 月历破戒图 -->
-  <view class="section-label">月历 · 破戒情况</view>
-  <view class="cal-card">
-    <view class="cal-head">
-      <view class="m num">{{monthLabel}}</view>
-      <view class="cal-nav">
-        <view class="cal-nav-btn {{canPrev ? '' : 'disabled'}}" bindtap="prevMonth">‹</view>
-        <view class="cal-nav-btn {{canNext ? '' : 'disabled'}}" bindtap="nextMonth">›</view>
-      </view>
+  <view class="section-label">月历破戒情况</view>
+  <view class="cal-head">
+    <view class="m num">{{monthLabel}}</view>
+    <view class="cal-nav">
+      <view class="cal-nav-btn {{canPrev ? '' : 'disabled'}}" bindtap="prevMonth">‹</view>
+      <view class="cal-nav-btn {{canNext ? '' : 'disabled'}}" bindtap="nextMonth">›</view>
     </view>
+  </view>
+  <view class="cal">
     <view class="cal-grid">
       <view wx:for="{{['一','二','三','四','五','六','日']}}" wx:key="*this" class="cal-wd">{{item}}</view>
       <block wx:for="{{weeks}}" wx:for-item="week" wx:for-index="wi" wx:key="wi">

@@ -1,9 +1,4 @@
 <view class="page stats-page">
-  <view class="page-head">
-    <view class="h-title">总体统计</view>
-    <view class="h-sub">看清全局，判断是否在变好</view>
-  </view>
-
   <view wx:if="{{loading}}" class="state-hint">加载中…</view>
 
   <view wx:elif="{{!hasData}}" class="empty">

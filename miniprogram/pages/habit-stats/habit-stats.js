@@ -3,6 +3,8 @@ const DB = require('../../utils/db.js');
 const S = require('../../utils/stats.js');
 const D = require('../../utils/date.js');
 
+const PERIOD_TEXT = { day: '每天', week: '每周', month: '每月' };
+
 Page({
   data: {
     habitId: '',
@@ -47,13 +49,17 @@ Page({
       const detail = S.habitDetail(habit, records, today);
       // WXML 不支持 .slice()，在 JS 层预处理显示用日期
       detail.startDateDisplay = detail.startDate.slice(5);
+      // 头部小字：周期目标 + 起点（与原型一致）
+      const habitView = Object.assign({}, habit, {
+        periodLabel: `${PERIOD_TEXT[habit.periodType] || '每周'}不超过 ${habit.limit} 次`
+      });
       this.setData({
-        habit,
+        habit: habitView,
         detail,
         today
       });
       this.buildMonth(month, habit, records, today);
-      wx.setNavigationBarTitle({ title: habit.name + ' · 统计' });
+      wx.setNavigationBarTitle({ title: '主题统计' });
     } catch (err) {
       console.error('[单卡统计] 加载失败', err);
       wx.showToast({ title: '加载失败', icon: 'none' });
