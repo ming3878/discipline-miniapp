@@ -13,7 +13,8 @@ function now() {
 // ---------- 戒断目标 habits ----------
 
 async function getHabits() {
-  const res = await db.collection(HABITS).orderBy('order', 'asc').get();
+  // 小程序端单次 get() 默认只返回 20 条，显式放宽到 100 避免静默截断
+  const res = await db.collection(HABITS).orderBy('order', 'asc').limit(PAGE).get();
   return res.data;
 }
 
