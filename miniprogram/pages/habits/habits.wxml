@@ -76,10 +76,11 @@
           <label>目标周期</label>
           <picker mode="selector" range="{{periods}}" range-key="label" value="{{form.periodType === 'day' ? 0 : (form.periodType === 'week' ? 1 : 2)}}" bindchange="onPeriodChange">
             <view class="input">
-              <text>{{form.periodType === 'day' ? '每天' : (form.periodType === 'week' ? '每周' : '每月')}}不超过 {{form.limit}} 次</text>
+              <text>{{form.periodType === 'day' ? '每天' : (form.periodType === 'week' ? '每周' : '每月')}}</text>
               <text class="arrow">▾</text>
             </view>
           </picker>
+          <view class="field-hint">按自然{{form.periodType === 'day' ? '天' : (form.periodType === 'week' ? '周' : '月')}}计算，周期内破戒次数不超过上限即为达成</view>
         </view>
 
         <!-- 上限 X：计步器 -->
