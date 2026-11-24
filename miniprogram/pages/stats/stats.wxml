@@ -1,0 +1,6 @@
+<view class="page">
+  <view class="card">
+    <view class="section-title">统计</view>
+    <view class="muted">页面占位 · 需求确认后开发</view>
+  </view>
+</view>

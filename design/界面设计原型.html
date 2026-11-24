@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自律打卡 · 界面设计原型 v1.0</title>
+<style>
+:root{
+  --paper:#F6F4EE; --surface:#FFFFFF; --pine:#23463B; --pine-2:#2F5A4C;
+  --clay:#C0533B; --clay-soft:#F4E3DE; --sage:#5C8C6A; --sage-soft:#E7F0E9;
+  --indigo:#3E6FB0; --indigo-soft:#E5EDF7; --mist:#DCDAD2; --mist-soft:#F0EFE9;
+  --ink:#1F2A26; --sub:#6B7A72; --faint:#9AA096; --line:#EBE8DF;
+  --r:16px; --rs:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI",sans-serif;line-height:1.5;padding:40px 24px 80px}
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.wrap{max-width:1440px;margin:0 auto}
+
+/* ---------- 说明头部 ---------- */
+.intro{max-width:980px;margin:0 auto 52px;text-align:center}
+.eyebrow{font-size:12px;letter-spacing:.22em;color:var(--pine);font-weight:600;text-transform:uppercase}
+.intro h1{font-size:40px;font-weight:700;letter-spacing:-.03em;margin:14px 0 10px;color:var(--ink)}
+.intro p{font-size:15px;color:var(--sub);max-width:640px;margin:0 auto;line-height:1.8}
+.tokens{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.tok{display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);border-radius:100px;padding:7px 13px 7px 8px;font-size:12px;color:var(--sub)}
+.dot{width:16px;height:16px;border-radius:50%;display:inline-block}
+
+/* ---------- 画廊 ---------- */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:44px 32px;align-items:start}
+.screen-block{display:flex;flex-direction:column;align-items:center}
+.screen-label{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;text-align:center}
+.screen-desc{font-size:11.5px;color:var(--sub);margin-bottom:16px;text-align:center;max-width:280px}
+
+/* ---------- 手机外壳 ---------- */
+.phone{width:340px;background:var(--paper);border-radius:40px;padding:11px;box-shadow:0 2px 4px rgba(31,42,38,.04),0 24px 60px rgba(31,42,38,.13),0 0 0 1px rgba(31,42,38,.06);position:relative}
+.notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#1F2A26;border-radius:0 0 16px 16px;z-index:5}
+.screen{background:var(--paper);border-radius:30px;overflow:hidden;height:640px;display:flex;flex-direction:column;position:relative}
+.statusbar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);flex-shrink:0;padding-top:6px}
+.statusbar .icons{display:flex;gap:5px;align-items:center}
+.battery{width:20px;height:10px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+.battery::after{content:"";position:absolute;right:-3px;top:2px;width:2px;height:4px;background:var(--ink);border-radius:0 1px 1px 0}
+.battery i{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:70%;background:var(--ink);border-radius:1px}
+.navbar{height:46px;display:flex;align-items:center;padding:0 18px;gap:10px;flex-shrink:0}
+.navbar .title{font-size:16px;font-weight:600}
+.nav-back{width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:20px;margin-left:-6px}
+.body{flex:1;overflow:hidden;padding:4px 16px 16px}
+
+/* ---------- 通用组件 ---------- */
+.card{background:var(--surface);border-radius:var(--r);padding:16px;border:1px solid var(--line)}
+.muted{color:var(--sub)}
+.faint{color:var(--faint)}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:600}
+.chip-ok{background:var(--sage-soft);color:var(--sage)}
+.chip-over{background:var(--clay-soft);color:var(--clay)}
+.btn{background:var(--pine);color:#fff;border-radius:11px;padding:11px 16px;font-size:13px;font-weight:600;text-align:center;border:none}
+.btn-clay{background:var(--clay)}
+.btn-soft{background:var(--pine-soft, #EDF1EE);color:var(--pine)}
+.sec-label{font-size:11px;letter-spacing:.08em;color:var(--faint);font-weight:600;text-transform:uppercase;margin:18px 2px 10px}
+
+/* ---------- 首页记录卡 ---------- */
+.hero{padding:8px 2px 16px}
+.hero .date{font-size:12px;color:var(--sub)}
+.hero h2{font-size:25px;font-weight:700;letter-spacing:-.02em;margin-top:3px}
+.hero .sub{font-size:12px;color:var(--faint);margin-top:4px}
+.habit{border:1px solid var(--line);border-radius:var(--r);padding:15px;margin-bottom:12px;background:var(--surface)}
+.habit-top{display:flex;align-items:flex-start;justify-content:space-between}
+.habit-id{display:flex;align-items:center;gap:10px}
+.emoji{width:38px;height:38px;border-radius:11px;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:19px;border:1px solid var(--line)}
+.habit-name{font-size:15px;font-weight:600}
+.habit-sub{font-size:11px;color:var(--sub);margin-top:2px}
+.streak-row{display:flex;align-items:baseline;gap:6px;margin:14px 0 2px}
+.streak-num{font-size:34px;font-weight:700;color:var(--pine);line-height:1}
+.streak-unit{font-size:12px;color:var(--sub)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:12px}
+.day{text-align:center}
+.day .lbl{font-size:10px;color:var(--faint);margin-bottom:5px}
+.day .lbl.today{color:var(--pine);font-weight:700}
+.bar{height:20px;border-radius:5px}
+.b-broken{background:var(--clay)}.b-clean{background:var(--sage-soft)}.b-today{background:var(--indigo)}.b-future{background:var(--mist-soft)}.b-before{background:transparent;border:1px dashed var(--mist)}
+.habit-foot{display:flex;justify-content:space-between;align-items:center;margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
+.habit-foot .cnt{font-size:12px;color:var(--sub)}
+.habit-foot .cnt b{font-size:13px}
+.cnt-clay{color:var(--clay)}
+.rec-btn{background:var(--pine);color:#fff;font-size:12px;font-weight:600;padding:8px 14px;border-radius:9px}
+.empty{text-align:center;padding:60px 24px;color:var(--sub)}
+.empty .ic{font-size:38px;opacity:.5}
+
+/* ---------- 记录页 ---------- */
+.form-card{padding:18px;margin-top:6px}
+.target-strip{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--sage-soft);border-radius:12px;margin-bottom:18px}
+.target-strip .emoji{background:#fff}
+.target-strip .t{font-size:13px;font-weight:600;color:var(--pine)}
+.target-strip .hint{font-size:11px;color:var(--sage)}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:12px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.field .req{color:var(--clay)}
+.input{width:100%;border:1px solid var(--line);background:#fff;border-radius:11px;padding:13px 14px;font-size:14px;color:var(--ink);display:flex;align-items:center;justify-content:space-between}
+.input .ph{color:var(--faint)}
+.stepper{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:11px;background:#fff;padding:6px}
+.stepper button{width:36px;height:36px;border-radius:8px;background:var(--paper);font-size:20px;color:var(--pine);border:1px solid var(--line);font-weight:600}
+.stepper .n{font-size:20px;font-weight:700;color:var(--ink)}
+.note-area{min-height:76px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:12px 14px;font-size:13px;color:var(--faint)}
+.save{width:100%;padding:14px;border-radius:12px;font-size:14px;font-weight:600;color:#fff;background:var(--pine);text-align:center;margin-top:4px}
+
+/* ---------- 主题管理 ---------- */
+.mgmt-item{display:flex;align-items:center;gap:11px;padding:13px 14px;border:1px solid var(--line);border-radius:13px;background:#fff;margin-bottom:10px}
+.mgmt-item .info{flex:1}
+.mgmt-item .nm{font-size:14px;font-weight:600}
+.mgmt-item .meta{font-size:11px;color:var(--sub);margin-top:3px}
+.icon-btn{width:30px;height:30px;border-radius:8px;background:var(--paper);display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:14px;border:1px solid var(--line)}
+.icon-btn.del{color:var(--clay)}
+.add-dash{border:1.5px dashed var(--sage);border-radius:13px;padding:14px;text-align:center;color:var(--sage);font-size:13px;font-weight:600;background:var(--sage-soft)}
+
+/* ---------- 单卡统计 ---------- */
+.detail-head{display:flex;align-items:center;gap:12px;padding:6px 2px 16px}
+.detail-head .emoji{width:46px;height:46px;font-size:22px}
+.detail-head h2{font-size:20px;font-weight:700}
+.detail-head p{font-size:11px;color:var(--sub);margin-top:2px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.metric{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 10px}
+.metric .k{font-size:10.5px;color:var(--sub);margin-bottom:6px}
+.metric .v{font-size:20px;font-weight:700;color:var(--pine);line-height:1}
+.metric .v.sm{font-size:15px}
+.metric .u{font-size:10px;color:var(--faint);font-weight:400}
+.cal-head{display:flex;justify-content:space-between;align-items:center;padding:0 2px 10px}
+.cal-head .m{font-size:14px;font-weight:600}
+.cal-nav{display:flex;gap:6px}
+.cal-nav span{width:26px;height:26px;border-radius:7px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--sub)}
+.cal{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal-wd{text-align:center;font-size:10px;color:var(--faint);padding-bottom:6px}
+.cal-cell{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+.c-clean{background:var(--sage-soft);color:var(--sage)}
+.c-broken{background:var(--clay);color:#fff}
+.c-broken-2{background:#9C3F2C;color:#fff}
+.c-today{background:var(--indigo);color:#fff}
+.c-future{color:var(--faint)}
+.c-before{color:#CFCFC7;background:var(--mist-soft)}
+.cal-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:10px;color:var(--sub)}
+.cal-legend i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:3px;vertical-align:-1px}
+
+/* ---------- 记录明细 ---------- */
+.filter{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 14px;font-size:13px;margin:6px 0 14px}
+.filter .arr{color:var(--faint)}
+.log-item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:9px;display:flex;align-items:flex-start;gap:11px}
+.log-date{text-align:center;min-width:40px}
+.log-date .d{font-size:19px;font-weight:700;color:var(--ink);line-height:1}
+.log-date .m{font-size:10px;color:var(--faint);margin-top:2px}
+.log-main{flex:1;border-left:1px solid var(--line);padding-left:12px}
+.log-main .c{font-size:12px;font-weight:600;color:var(--pine)}
+.log-main .note{font-size:11px;color:var(--sub);margin-top:3px}
+.log-del{color:var(--clay);font-size:11px;align-self:center}
+
+/* ---------- 总体统计 ---------- */
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:6px 0 4px}
+.sum{background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px}
+.sum.big{grid-column:span 2;background:var(--pine);border-color:var(--pine);color:#fff}
+.sum.big .k{color:rgba(255,255,255,.72)}
+.sum.big .v{color:#fff}
+.sum.big .u{color:rgba(255,255,255,.6)}
+.sum .k{font-size:11px;color:var(--sub);margin-bottom:8px}
+.sum .v{font-size:26px;font-weight:700;color:var(--pine);line-height:1}
+.sum .v.sm{font-size:17px}
+.sum .u{font-size:10px;color:var(--faint);font-weight:400}
+.chart{background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px}
+.chart .ct{font-size:12px;font-weight:600;margin-bottom:14px}
+.bars{display:flex;align-items:flex-end;justify-content:space-between;height:96px;gap:6px;border-bottom:1px solid var(--line);padding-bottom:0}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar-col .bv{width:100%;max-width:22px;border-radius:5px 5px 0 0;background:var(--pine)}
+.bar-col .bv.hot{background:var(--clay)}
+.bar-col .bl{font-size:9.5px;color:var(--faint);margin-top:6px}
+.hbar{margin-bottom:11px}
+.hbar .row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px}
+.hbar .track{height:9px;background:var(--mist-soft);border-radius:6px;overflow:hidden}
+.hbar .fill{height:100%;border-radius:6px;background:var(--sage)}
+.hbar .fill.hot{background:var(--clay)}
+
+/* ---------- tabbar ---------- */
+.tabbar{height:56px;background:#fff;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-around;flex-shrink:0;padding-bottom:4px}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--faint);min-width:52px}
+.tab.on{color:var(--pine);font-weight:600}
+.tab .ti{font-size:17px;line-height:1}
+.home-ind{height:4px;width:100px;background:var(--ink);border-radius:4px;margin:0 auto 6px;opacity:.85}
+
+.footnote{max-width:980px;margin:56px auto 0;text-align:center;font-size:12px;color:var(--faint);line-height:1.9}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">Design Prototype · v1.0</div>
+    <h1>自律打卡 · 界面设计</h1>
+    <p>一款戒断型工具。设计语言追求「清醒的掌控」——暖纸底、墨绿主色、赤陶破戒色，避开打鸡管式自律 App 的火焰与喧哗。以下为 6 个核心页面的高保真原型。</p>
+    <div class="tokens">
+      <span class="tok"><i class="dot" style="background:#F6F4EE;border:1px solid #ddd"></i>纸底 #F6F4EE</span>
+      <span class="tok"><i class="dot" style="background:#23463B"></i>墨绿 #23463B</span>
+      <span class="tok"><i class="dot" style="background:#C0533B"></i>赤陶 #C0533B</span>
+      <span class="tok"><i class="dot" style="background:#5C8C6A"></i>鼠尾草 #5C8C6A</span>
+      <span class="tok"><i class="dot" style="background:#3E6FB0"></i>靛蓝 #3E6FB0</span>
+    </div>
+  </div>
+
+  <div class="gallery">
+
+    <!-- ========== 1 首页 ========== -->
+    <div class="screen-block">
+      <div class="screen-label">01 · 首页 / 记录卡列表</div>
+      <div class="screen-desc">每卡 7 字段；A3 一周五态色块；点卡片进统计，点「记一次」进记录</div>
+      <div class="phone"><div class="notch"></div><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● <span class="battery"><i></i></span></span></div>
+        <div class="body" style="padding-top:2px">
+          <div class="hero">
+            <div class="date num">11月24日 · 周二</div>
+            <h2>下午好，稳住。</h2>
+            <div class="sub">3 个主题正在坚持中</div>
+          </div>
+
+          <div class="habit">
+            <div class="habit-top">
+              <div class="habit-id"><div class="emoji">🚭</div><div><div class="habit-name">戒烟</div><div class="habit-sub">为了家人，也为了自己</div></div></div>
+              <span class="chip chip-ok">正常</span>
+            </div>
+            <div class="streak-row"><span class="streak-num num">42</span><span class="streak-unit">天未破戒</span></div>
+            <div class="week">
+              <div class="day"><div class="lbl">一</div><div class="bar b-clean"></div></div>
+              <div class="day"><div class="lbl">二</div><div class="bar b-broken"></div></div>
+              <div class="day"><div class="lbl today">三</div><div class="bar b-today"></div></div>
+              <div class="day"><div class="lbl">四</div><div class="bar b-clean"></div></div>
+              <div class="day"><div class="lbl">五</div><div class="bar b-clean"></div></div>
+              <div class="day"><div class="lbl">六</div><div class="bar b-future"></div></div>
+              <div class="day"><div class="lbl">日</div><div class="bar b-future"></div></div>
+            </div>
+            <div class="habit-foot"><div class="cnt">本周破戒 <b class="cnt-clay num">2</b> / 3 次</div><div class="rec-btn">记一次</div></div>
+          </div>
+
+          <div class="habit">
+            <div class="habit-top">
+              <div class="habit-id"><div class="emoji">🎮</div><div><div class="habit-name">戒游戏</div><div class="habit-sub">工作日不碰</div></div></div>
+              <span class="chip chip-ok">正常</span>
+            </div>
+            <div class="streak-row"><span class="streak-num num">7</span><span class="streak-unit">天未破戒</span></div>
+            <div class="week">
+              <div class="day"><div class="lbl">一</div><div class="bar b-clean"></div></div>
+              <div class="day"><div class="lbl">二</div><div class="bar b-clean"></div></div>
+              <div class="day"><div class="lbl today">三</div><div class="bar b-today"></div></div>
+              <div class="day"><div class="lbl">四</div><div class="bar b-clean"></div></div>
+              <div class="day"><div class="lbl">五</div><div class="bar b-clean"></div></div>
+              <div class="day"><div class="lbl">六</div><div class="bar b-future"></div></div>
+              <div class="day"><div class="lbl">日</div><div class="bar b-future"></div></div>
+            </div>
+            <div class="habit-foot"><div class="cnt">本周破戒 <b class="num">0</b> / 2 次</div><div class="rec-btn">记一次</div></div>
+          </div>
+
+          <div class="habit" style="margin-bottom:4px">
+            <div class="habit-top">
+              <div class="habit-id"><div class="emoji">🌙</div><div><div class="habit-name">戒熬夜</div><div class="habit-sub">23 点前入睡</div></div></div>
+              <span class="chip chip-over">已超限</span>
+            </div>
+            <div class="streak-row"><span class="streak-num num" style="color:var(--clay)">3</span><span class="streak-unit">天未破戒</span></div>
+            <div class="week">
+              <div class="day"><div class="lbl">一</div><div class="bar b-broken"></div></div>
+              <div class="day"><div class="lbl">二</div><div class="bar b-clean"></div></div>
+              <div class="day"><div class="lbl today">三</div><div class="bar b-today"></div></div>
+              <div class="day"><div class="lbl">四</div><div class="bar b-clean"></div></div>
+              <div class="day"><div class="lbl">五</div><div class="bar b-clean"></div></div>
+              <div class="day"><div class="lbl">六</div><div class="bar b-future"></div></div>
+              <div class="day"><div class="lbl">日</div><div class="bar b-future"></div></div>
+            </div>
+            <div class="habit-foot"><div class="cnt">本周破戒 <b class="cnt-clay num">2</b> / 1 次</div><div class="rec-btn" style="background:var(--clay)">记一次</div></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><span class="ti">⌂</span>今日</div>
+          <div class="tab"><span class="ti">▤</span>统计</div>
+          <div class="tab"><span class="ti">☰</span>主题</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- ========== 2 记录页 ========== -->
+    <div class="screen-block">
+      <div class="screen-label">02 · 破戒记录页</div>
+      <div class="screen-desc">日期默认今天、不早于 C4；次数≥1；同日多次自动叠加</div>
+      <div class="phone"><div class="notch"></div><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● <span class="battery"><i></i></span></span></div>
+        <div class="navbar"><span class="nav-back">‹</span><span class="title">记录破戒</span></div>
+        <div class="body">
+          <div class="target-strip"><div class="emoji">🚭</div><div><div class="t">戒烟</div><div class="hint">始于 2026-11-01 · 每周不超过 3 次</div></div></div>
+
+          <div class="card form-card">
+            <div class="field">
+              <label>破戒日期</label>
+              <div class="input"><span class="num">2026-11-24 · 今天</span><span style="color:var(--pine);font-size:12px">更改 ›</span></div>
+              <div style="font-size:10.5px;color:var(--faint);margin-top:6px">最早可选 11-01（主题起点）</div>
+            </div>
+
+            <div class="field">
+              <label>本次破戒次数 <span class="req">*</span></label>
+              <div class="stepper"><button>−</button><span class="n num">1</span><button>+</button></div>
+              <div style="font-size:10.5px;color:var(--faint);margin-top:6px">同一天可多次记录，次数会自动累加</div>
+            </div>
+
+            <div class="field" style="margin-bottom:14px">
+              <label>备注 <span style="color:var(--faint);font-weight:400">（可选）</span></label>
+              <div class="note-area">这次是因为什么？</div>
+            </div>
+
+            <div class="save">保存记录</div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- ========== 3 主题管理 ========== -->
+    <div class="screen-block">
+      <div class="screen-label">03 · 主题管理页</div>
+      <div class="screen-desc">新增 / 编辑 / 删除 / 排序；删除二次确认，不做回收站</div>
+      <div class="phone"><div class="notch"></div><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● <span class="battery"><i></i></span></span></div>
+        <div class="navbar"><span class="title" style="font-size:18px">我的主题</span><span style="margin-left:auto;width:28px;height:28px;border-radius:8px;background:var(--pine);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px">+</span></div>
+        <div class="body">
+          <div class="mgmt-item"><div class="emoji">🚭</div><div class="info"><div class="nm">戒烟</div><div class="meta num">始于 11-01 · 每周 ≤ 3 次</div></div><div class="icon-btn">✎</div><div class="icon-btn">⋮⋮</div></div>
+          <div class="mgmt-item"><div class="emoji">🎮</div><div class="info"><div class="nm">戒游戏</div><div class="meta num">始于 11-18 · 每周 ≤ 2 次</div></div><div class="icon-btn">✎</div><div class="icon-btn">⋮⋮</div></div>
+          <div class="mgmt-item"><div class="emoji">🌙</div><div class="info"><div class="nm">戒熬夜</div><div class="meta num">始于 11-22 · 每周 ≤ 1 次</div></div><div class="icon-btn">✎</div><div class="icon-btn">⋮⋮</div></div>
+          <div class="add-dash">＋ 新增主题</div>
+
+          <div class="sec-label">编辑表单 · 字段</div>
+          <div class="card form-card" style="padding:15px">
+            <div style="display:flex;gap:10px;margin-bottom:13px">
+              <div style="flex:0 0 56px"><div style="font-size:11px;color:var(--sub);margin-bottom:6px">图标</div><div class="emoji" style="width:52px;height:52px;font-size:24px">🚭</div></div>
+              <div style="flex:1"><div style="font-size:11px;color:var(--sub);margin-bottom:6px">标题</div><div class="input" style="padding:11px 12px">戒烟</div></div>
+            </div>
+            <div style="font-size:11px;color:var(--sub);margin:0 0 6px">副标题</div>
+            <div class="input" style="padding:11px 12px;margin-bottom:13px">为了家人，也为了自己</div>
+            <div style="display:flex;gap:10px">
+              <div style="flex:1"><div style="font-size:11px;color:var(--sub);margin-bottom:6px">开始日期 C4</div><div class="input num" style="padding:11px 10px;font-size:12px">2026-11-01</div></div>
+              <div style="flex:1"><div style="font-size:11px;color:var(--sub);margin-bottom:6px">目标周期 C5</div><div class="input" style="padding:11px 10px;font-size:12px">每周 ≤ 3 次</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="ti">⌂</span>今日</div>
+          <div class="tab"><span class="ti">▤</span>统计</div>
+          <div class="tab on"><span class="ti">☰</span>主题</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- ========== 4 单卡统计 ========== -->
+    <div class="screen-block">
+      <div class="screen-label">04 · 单卡统计页</div>
+      <div class="screen-desc">6 项数据总览 + 月历破戒图（五态着色，可切月）</div>
+      <div class="phone"><div class="notch"></div><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● <span class="battery"><i></i></span></span></div>
+        <div class="navbar"><span class="nav-back">‹</span><span class="title">主题统计</span></div>
+        <div class="body">
+          <div class="detail-head"><div class="emoji">🚭</div><div><h2>戒烟</h2><p>每周不超过 3 次 · 始于 11-01</p></div></div>
+
+          <div class="metrics">
+            <div class="metric"><div class="k">习惯始于</div><div class="v sm num">11-01</div></div>
+            <div class="metric"><div class="k">当前已戒</div><div class="v num">42<span class="u"> 天</span></div></div>
+            <div class="metric"><div class="k">最长已戒</div><div class="v num">58<span class="u"> 天</span></div></div>
+            <div class="metric"><div class="k">合计破戒</div><div class="v num" style="color:var(--clay)">9<span class="u"> 次</span></div></div>
+            <div class="metric"><div class="k">达成目标</div><div class="v num">15<span class="u"> 次</span></div></div>
+            <div class="metric"><div class="k">记录明细</div><div class="v sm" style="color:var(--sub);font-size:13px;padding-top:4px">查看 ›</div></div>
+          </div>
+
+          <div class="sec-label">月历破戒情况</div>
+          <div class="cal-head"><div class="m num">2026 年 11 月</div><div class="cal-nav"><span>‹</span><span>›</span></div></div>
+          <div class="cal">
+            <div class="cal-grid">
+              <div class="cal-wd">一</div><div class="cal-wd">二</div><div class="cal-wd">三</div><div class="cal-wd">四</div><div class="cal-wd">五</div><div class="cal-wd">六</div><div class="cal-wd">日</div>
+              <div></div><div></div><div></div><div></div><div></div>
+              <div class="cal-cell c-clean">1</div><div class="cal-cell c-clean">2</div><div class="cal-cell c-broken">3</div><div class="cal-cell c-clean">4</div><div class="cal-cell c-clean">5</div><div class="cal-cell c-clean">6</div><div class="cal-cell c-clean">7</div>
+              <div class="cal-cell c-clean">8</div><div class="cal-cell c-broken-2">9</div><div class="cal-cell c-clean">10</div><div class="cal-cell c-clean">11</div><div class="cal-cell c-clean">12</div><div class="cal-cell c-clean">13</div><div class="cal-cell c-clean">14</div>
+              <div class="cal-cell c-clean">15</div><div class="cal-cell c-clean">16</div><div class="cal-cell c-clean">17</div><div class="cal-cell c-clean">18</div><div class="cal-cell c-clean">19</div><div class="cal-cell c-broken">20</div><div class="cal-cell c-clean">21</div>
+              <div class="cal-cell c-clean">22</div><div class="cal-cell c-clean">23</div><div class="cal-cell c-today">24</div><div class="cal-cell c-future">25</div><div class="cal-cell c-future">26</div><div class="cal-cell c-future">27</div><div class="cal-cell c-future">28</div>
+              <div class="cal-cell c-future">29</div><div class="cal-cell c-future">30</div>
+            </div>
+            <div class="cal-legend"><span><i style="background:var(--clay)"></i>破戒</span><span><i style="background:var(--sage-soft)"></i>未破戒</span><span><i style="background:var(--indigo)"></i>今天</span><span><i style="background:var(--mist-soft)"></i>未来/起点前</span></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- ========== 5 记录明细 ========== -->
+    <div class="screen-block">
+      <div class="screen-label">05 · 记录明细页</div>
+      <div class="screen-desc">按月筛选、日期倒序；单条删除需二次确认</div>
+      <div class="phone"><div class="notch"></div><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● <span class="battery"><i></i></span></span></div>
+        <div class="navbar"><span class="nav-back">‹</span><span class="title">记录明细</span><span style="margin-left:auto;font-size:12px;color:var(--sub)">戒烟</span></div>
+        <div class="body">
+          <div class="filter"><span class="num">2026 年 11 月</span><span class="arr">筛选 ▾</span></div>
+
+          <div class="log-item"><div class="log-date"><div class="d num">20</div><div class="m num">11月</div></div><div class="log-main"><div class="c num">破戒 1 次</div><div class="note">晚上没忍住，睡前刷了一小时</div></div><div class="log-del">删除</div></div>
+          <div class="log-item"><div class="log-date"><div class="d num">09</div><div class="m num">11月</div></div><div class="log-main"><div class="c num">破戒 2 次</div><div class="note">聚会场合，破例了</div></div><div class="log-del">删除</div></div>
+          <div class="log-item"><div class="log-date"><div class="d num">03</div><div class="m num">11月</div></div><div class="log-main"><div class="c num">破戒 1 次</div><div class="note">压力大，无意识点上</div></div><div class="log-del">删除</div></div>
+          <div class="log-item"><div class="log-date"><div class="d num">28</div><div class="m num">10月</div></div><div class="log-main"><div class="c num">破戒 1 次</div><div class="note">加班太晚</div></div><div class="log-del">删除</div></div>
+          <div class="log-item"><div class="log-date"><div class="d num">14</div><div class="m num">10月</div></div><div class="log-main"><div class="c num">破戒 1 次</div><div class="note">—</div></div><div class="log-del">删除</div></div>
+
+          <div style="text-align:center;font-size:11px;color:var(--faint);margin-top:14px">共 9 条记录 · 本月 3 条</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- ========== 6 总体统计 ========== -->
+    <div class="screen-block">
+      <div class="screen-label">06 · 总体统计页</div>
+      <div class="screen-desc">4 项总览 + 2 个月度图形（趋势柱状 + 主题对比条形）</div>
+      <div class="phone"><div class="notch"></div><div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="icons">●●● <span class="battery"><i></i></span></span></div>
+        <div class="navbar"><span class="title" style="font-size:18px">总体统计</span></div>
+        <div class="body">
+          <div class="sum-grid">
+            <div class="sum big"><div class="k">当前连续未破戒</div><div class="v num" style="font-size:34px">4<span class="u"> 天</span></div><div style="font-size:10.5px;color:rgba(255,255,255,.6);margin-top:6px">任一主题破戒即重新计时</div></div>
+            <div class="sum"><div class="k">累计破戒</div><div class="v num" style="color:var(--clay)">18<span class="u"> 次</span></div></div>
+            <div class="sum"><div class="k">进行中主题</div><div class="v num">3<span class="u"> 个</span></div></div>
+            <div class="sum" style="grid-column:span 2"><div class="k">坚持最久的主题</div><div class="v sm num" style="font-size:16px">🚭 戒烟 · 42 天</div></div>
+          </div>
+
+          <div class="sec-label">近 6 个月破戒趋势</div>
+          <div class="chart">
+            <div class="ct num">总次数走势</div>
+            <div class="bars">
+              <div class="bar-col"><div class="bv" style="height:70%"></div><div class="bl">6月</div></div>
+              <div class="bar-col"><div class="bv" style="height:52%"></div><div class="bl">7月</div></div>
+              <div class="bar-col"><div class="bv hot" style="height:92%"></div><div class="bl">8月</div></div>
+              <div class="bar-col"><div class="bv" style="height:60%"></div><div class="bl">9月</div></div>
+              <div class="bar-col"><div class="bv" style="height:38%"></div><div class="bl">10月</div></div>
+              <div class="bar-col"><div class="bv" style="height:26%"></div><div class="bl">11月</div></div>
+            </div>
+          </div>
+
+          <div class="sec-label">本月各主题破戒对比</div>
+          <div class="chart">
+            <div class="hbar"><div class="row"><span>🌙 戒熬夜</span><span class="num">5 次</span></div><div class="track"><div class="fill hot" style="width:100%"></div></div></div>
+            <div class="hbar"><div class="row"><span>🚭 戒烟</span><span class="num">3 次</span></div><div class="track"><div class="fill" style="width:60%"></div></div></div>
+            <div class="hbar" style="margin-bottom:2px"><div class="row"><span>🎮 戒游戏</span><span class="num">1 次</span></div><div class="track"><div class="fill" style="width:20%"></div></div></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="ti">⌂</span>今日</div>
+          <div class="tab on"><span class="ti">▤</span>统计</div>
+          <div class="tab"><span class="ti">☰</span>主题</div>
+        </div>
+      </div></div>
+    </div>
+
+  </div>
+
+  <div class="footnote">
+    设计覆盖率：6 / 6 核心页面（首页 · 记录页 · 主题管理 · 单卡统计 · 记录明细 · 总体统计）<br>
+    设计令牌：6 主色 + 语义色阶 · 圆角 16/10px · 4pt 间距基准 · 数字 tabular-nums 对齐<br>
+    每屏均为高保真静态示意，交互逻辑与统计口径以需求文档 v1.3 为准
+  </div>
+
+</div>
+</body>
+</html>

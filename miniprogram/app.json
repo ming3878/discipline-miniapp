@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/stats/stats",
+    "pages/habits/habits",
+    "pages/record/record",
+    "pages/habit-stats/habit-stats",
+    "pages/records/records"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#4F6EF7",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "自律打卡",
+    "backgroundColor": "#F4F6FB",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "color": "#9AA3B2",
+    "selectedColor": "#4F6EF7",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "今日",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/stats/stats",
+        "text": "统计",
+        "iconPath": "images/stats.png",
+        "selectedIconPath": "images/stats-active.png"
+      },
+      {
+        "pagePath": "pages/habits/habits",
+        "text": "习惯",
+        "iconPath": "images/habits.png",
+        "selectedIconPath": "images/habits-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

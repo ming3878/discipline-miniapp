@@ -1,0 +1,61 @@
+page {
+  --primary: #4F6EF7;
+  --primary-light: #EEF1FF;
+  --success: #22B07D;
+  --danger: #E5544B;
+  --text: #1F2430;
+  --text-sub: #8A93A5;
+  --bg: #F4F6FB;
+  --card: #FFFFFF;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 32rpx 28rpx 60rpx;
+  box-sizing: border-box;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 8rpx 30rpx rgba(31, 36, 48, 0.05);
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text);
+  margin: 8rpx 0 24rpx;
+}
+
+.muted {
+  color: var(--text-sub);
+  font-size: 24rpx;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  padding: 18rpx 0;
+  text-align: center;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-ghost {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-radius: 14rpx;
+  font-size: 26rpx;
+  padding: 14rpx 0;
+  text-align: center;
+}
