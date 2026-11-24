@@ -2,7 +2,7 @@
 const DB = require('../../utils/db.js');
 const D = require('../../utils/date.js');
 
-const EMOJIS = ['🚭', '🎮', '🌙', '🍺', '🍬', '📱', '🍖', '☕', '🚬', '🎲', '🛒', '💸', '🛌', '🍟', '🎬', '✍️'];
+const EMOJIS = ['🚭', '🎮', '🌙', '🍺', '🍬', '📱', '🍖', '☕', '✈️', '🎲', '🛒', '💸', '🛌', '🍟', '🎬', '✍️'];
 const PERIODS = [
   { key: 'day', label: '每天' },
   { key: 'week', label: '每周' },
