@@ -60,7 +60,8 @@ Page({
   applyFilter() {
     const { allRecords, months, monthIndex } = this.data;
     const selected = months[monthIndex];
-    const list = selected && selected.key
+    const isMonth = !!(selected && selected.key);
+    const list = isMonth
       ? allRecords.filter((r) => r.date.slice(0, 7) === selected.key)
       : allRecords;
     const total = list.reduce((s, r) => s + (Number(r.count) || 0), 0);
@@ -69,10 +70,17 @@ Page({
       dayDisplay: r.date.slice(8),
       monthDisplay: r.date.slice(5, 7)
     }));
-    this.setData({
-      displayRecords,
-      totalText: `共 ${list.length} 条记录 · 合计破戒 ${total} 次`
-    });
+    // 底部统计口径随筛选变化：全部才说「合计」，按月份只看该月
+    let totalText;
+    if (isMonth) {
+      const y = selected.key.slice(0, 4);
+      const m = Number(selected.key.slice(5));
+      const prefix = y === D.todayKey().slice(0, 4) ? `${m} 月` : `${y} 年 ${m} 月`;
+      totalText = `${prefix} · ${list.length} 条记录 · 破戒 ${total} 次`;
+    } else {
+      totalText = `共 ${list.length} 条记录 · 合计破戒 ${total} 次`;
+    }
+    this.setData({ displayRecords, totalText });
   },
 
   async deleteRecord(e) {
