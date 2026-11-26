@@ -16,12 +16,12 @@
         <view class="nm">{{item.name}}</view>
         <view class="meta num">始于 {{item.startShort}} · {{item.periodText}} ≤ {{item.limit}} 次</view>
       </view>
-      <view class="icon-btn" data-id="{{item._id}}" bindtap="editHabit">✎</view>
-      <view class="icon-btn" data-index="{{index}}" data-id="{{item._id}}" data-name="{{item.name}}" bindtap="moreActions">⋮⋮</view>
+      <view hover-class="is-pressed" class="icon-btn" data-id="{{item._id}}" bindtap="editHabit">✎</view>
+      <view hover-class="is-pressed" class="icon-btn" data-index="{{index}}" data-id="{{item._id}}" data-name="{{item.name}}" bindtap="moreActions">⋮⋮</view>
     </view>
 
     <!-- 新增入口 -->
-    <view class="add-dash" bindtap="addHabit">＋ 新增戒断目标</view>
+    <view hover-class="is-pressed" class="add-dash" bindtap="addHabit">＋ 新增戒断目标</view>
   </block>
 
   <!-- 编辑/新增表单（内嵌弹层） -->
@@ -29,7 +29,7 @@
     <view class="form-panel" catchtap="noop">
       <view class="form-head">
         <view class="form-title">{{isEdit ? '编辑戒断目标' : '新增戒断目标'}}</view>
-        <view class="form-close" bindtap="closeForm">✕</view>
+        <view hover-class="is-pressed" class="form-close" bindtap="closeForm">✕</view>
       </view>
 
       <scroll-view scroll-y class="form-body">
@@ -37,7 +37,7 @@
         <view class="field">
           <label>图标</label>
           <view class="emoji-grid">
-            <view
+            <view hover-class="is-pressed"
               wx:for="{{emojis}}"
               wx:key="*this"
               class="emoji-opt {{form.icon === item ? 'sel' : ''}}"
@@ -87,7 +87,7 @@
         <view class="field">
           <label>上限次数 X</label>
           <view class="stepper">
-            <view class="step-btn {{form.limit <= 1 ? 'dis' : ''}}" bindtap="minusLimit">−</view>
+            <view hover-class="is-pressed" class="step-btn {{form.limit <= 1 ? 'dis' : ''}}" bindtap="minusLimit">−</view>
             <view class="step-val">
               <text class="n num">{{form.limit}}</text>
               <text class="u">次 / {{form.periodType === 'day' ? '天' : (form.periodType === 'week' ? '周' : '月')}}</text>
@@ -99,8 +99,8 @@
       </scroll-view>
 
       <view class="form-foot">
-        <view class="btn-cancel" bindtap="closeForm">取消</view>
-        <view class="btn-primary" bindtap="saveHabit">{{isEdit ? '保存修改' : '创建戒断目标'}}</view>
+        <view hover-class="is-pressed" class="btn-cancel" bindtap="closeForm">取消</view>
+        <view hover-class="is-pressed" class="btn-primary" bindtap="saveHabit">{{isEdit ? '保存修改' : '创建戒断目标'}}</view>
       </view>
     </view>
   </view>

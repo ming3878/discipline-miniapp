@@ -3,23 +3,23 @@
 
 /* 顶部问候（原型 .hero padding 8/2/16，h2 25px，sub 12px） */
 .hero { padding: 18rpx 4rpx 38rpx; }
-.hero .date { font-size: 28rpx; color: var(--sub); }
-.hero .greet { font-size: 58rpx; font-weight: 700; letter-spacing: -.02em; margin-top: 8rpx; line-height: 1.25; }
-.hero .hero-sub { font-size: 28rpx; color: var(--faint); margin-top: 10rpx; }
+.hero .date { font-size: var(--t-sub); color: var(--sub); }
+.hero .greet { font-size: var(--t-num-2); font-weight: 700; letter-spacing: -.02em; margin-top: 8rpx; line-height: 1.25; }
+.hero .hero-sub { font-size: var(--t-sub); color: var(--sub); margin-top: 10rpx; }
 
-.state-hint { text-align: center; color: var(--faint); font-size: 28rpx; padding: 90rpx 0; }
+.state-hint { text-align: center; color: var(--sub); font-size: var(--t-sub); padding: 90rpx 0; }
 
 /* 空态 */
 .empty { text-align: center; padding: 140rpx 40rpx; }
 .empty-ic { font-size: 90rpx; color: var(--mist); line-height: 1; }
-.empty-title { font-size: 34rpx; font-weight: 600; margin-top: 26rpx; }
-.empty-sub { font-size: 28rpx; color: var(--sub); margin-top: 12rpx; }
+.empty-title { font-size: var(--t-h2); font-weight: 600; margin-top: 26rpx; }
+.empty-sub { font-size: var(--t-sub); color: var(--sub); margin-top: 12rpx; }
 .empty-btn {
   display: inline-block;
   margin-top: 40rpx;
   background: var(--pine);
   color: #fff;
-  font-size: 30rpx;
+  font-size: var(--t-body);
   font-weight: 600;
   padding: 22rpx 48rpx;
   border-radius: var(--rs);
@@ -47,19 +47,19 @@
   border: 1rpx solid var(--line);
   flex-shrink: 0;
 }
-.habit-name { font-size: 36rpx; font-weight: 600; }
-.habit-sub { font-size: 26rpx; color: var(--sub); margin-top: 6rpx; }
+.habit-name { font-size: var(--t-h2); font-weight: 600; }
+.habit-sub { font-size: var(--t-sub); color: var(--sub); margin-top: 6rpx; }
 
 /* 当前已戒（原型 streak-num 34px / unit 12px） */
 .streak-row { display: flex; align-items: baseline; gap: 14rpx; margin: 32rpx 0 6rpx; }
-.streak-num { font-size: 80rpx; font-weight: 700; color: var(--pine); line-height: 1; }
-.streak-unit { font-size: 28rpx; color: var(--sub); }
+.streak-num { font-size: var(--t-num); font-weight: 700; color: var(--pine); line-height: 1; }
+.streak-unit { font-size: var(--t-sub); color: var(--sub); }
 
 /* 一周状态条（flex 七等分，避免 grid 在小程序端错位；bar 20px→48rpx） */
 .week { display: flex; margin-top: 28rpx; }
 .week .day { flex: 1 1 0; min-width: 0; text-align: center; margin-right: 12rpx; }
 .week .day:last-child { margin-right: 0; }
-.day .lbl { font-size: 24rpx; color: var(--faint); margin-bottom: 12rpx; }
+.day .lbl { font-size: var(--t-cap); color: var(--sub); margin-bottom: 12rpx; }
 .day .lbl.today { color: var(--pine); font-weight: 700; }
 .bar { height: 48rpx; border-radius: 12rpx; }
 
@@ -72,14 +72,14 @@
   padding-top: 28rpx;
   border-top: 1rpx solid var(--line);
 }
-.habit-foot .cnt { font-size: 28rpx; color: var(--sub); }
-.habit-foot .cnt b { font-size: 30rpx; }
+.habit-foot .cnt { font-size: var(--t-sub); color: var(--sub); }
+.habit-foot .cnt b { font-size: var(--t-body); }
 .cnt-clay { color: var(--clay); }
 /* 原型 rec-btn：font 12px、padding 8/14、radius 9 */
 .rec-btn {
   background: var(--pine);
   color: #fff;
-  font-size: 28rpx;
+  font-size: var(--t-sub);
   font-weight: 600;
   padding: 18rpx 32rpx;
   border-radius: 20rpx;

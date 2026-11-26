@@ -9,6 +9,9 @@ page {
   --clay-soft: #F4E3DE;
   --sage: #5C8C6A;
   --sage-soft: #E7F0E9;
+  /* 文字专用色：sage / clay 在暖白底上只有 3.5–4.2，达不到 4.5 的下限，只能做色块不能做文字 */
+  --sage-ink: #3F6B4E;
+  --clay-ink: #9A3B27;
   /* 未破戒色块专用：鼠尾草绿的中间调，比 sage-soft 明显、比 sage 轻，
      用于首页周视图这种无文字的小色块（sage-soft 在暖白底上几乎看不出绿） */
   --sage-mid: #7FBD91;
@@ -16,13 +19,25 @@ page {
   --indigo-soft: #E5EDF7;
   --mist: #DCDAD2;
   --mist-soft: #F0EFE9;
+  /* 周视图未来格专用：比 mist-soft 深一档，在白卡上才有 1.5 以上的可辨识度 */
+  --mist-2: #D2CFC4;
   --ink: #1F2A26;
-  --sub: #6B7A72;
-  --faint: #9AA096;
+  /* 次级文字唯一一档（白卡 5.56 / 纸底 5.06）：层级靠字号和字重区分，不靠继续调浅 */
+  --sub: #5F6B64;
+  /* 仅装饰：图标、箭头、禁用态。不承载信息，不得用于正文 */
+  --faint: #B4B2A9;
   --line: #EBE8DF;
   /* 圆角按原型 16px / 11px 换算：16×2.36≈38rpx，11×2.36≈26rpx */
   --r: 38rpx;
   --rs: 26rpx;
+  /* 字号体系：7 档，全部字号必须走令牌（图标与 emoji 尺寸不在此体系内，保持裸 rpx） */
+  --t-num: 80rpx;    /* 40px 主数值：累计破戒、当前未破戒天数 */
+  --t-num-2: 56rpx;  /* 28px 次数值：问候语、卡片内次要大数 */
+  --t-h: 44rpx;      /* 22px 卡片标题、指标数值 */
+  --t-h2: 36rpx;     /* 18px 列表主文本、区块标题 */
+  --t-body: 32rpx;   /* 16px 正文、表单输入、主按钮 */
+  --t-sub: 28rpx;    /* 14px 辅助说明、meta、图例 */
+  --t-cap: 24rpx;    /* 12px 最小说明、单位、星期 */
   background: var(--paper);
   color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
@@ -46,25 +61,28 @@ page {
 }
 
 .muted { color: var(--sub); }
-.faint { color: var(--faint); }
+.faint { color: var(--sub); }
 
 .chip {
   display: inline-flex;
   align-items: center;
-  font-size: 26rpx;
+  font-size: var(--t-sub);
   padding: 8rpx 20rpx;
   border-radius: 999rpx;
   font-weight: 600;
 }
-.chip-ok { background: var(--sage-soft); color: var(--sage); }
-.chip-over { background: var(--clay-soft); color: var(--clay); }
+.chip-ok { background: var(--sage-soft); color: var(--sage-ink); }
+.chip-over { background: var(--clay-soft); color: var(--clay-ink); }
+
+/* 按压反馈：所有可点元素统一挂 hover-class="is-pressed" */
+.is-pressed { opacity: .62; }
 
 /* 原型 .btn：padding 11/16、radius 11、font 13 */
 .btn-primary {
   background: var(--pine);
   color: #fff;
   border-radius: var(--rs);
-  font-size: 30rpx;
+  font-size: var(--t-body);
   font-weight: 600;
   padding: 26rpx 0;
   text-align: center;
@@ -74,17 +92,18 @@ page {
 
 /* 原型 .sec-label：font 11、margin 18/2/10 */
 .section-label {
-  font-size: 26rpx;
+  font-size: var(--t-sub);
   letter-spacing: .08em;
-  color: var(--faint);
+  color: var(--sub);
   font-weight: 600;
   margin: 42rpx 5rpx 24rpx;
 }
 
-/* 通用状态色块（A3 / 月历共用五态） */
+/* 通用状态色块（A3 / 月历共用五态）
+   破戒红与今天蓝的亮度比只有 1.11，色弱下几乎同色，所以今天额外加一圈内描边做形状冗余 */
 .s-broken { background: var(--clay); }
 .s-broken-2 { background: var(--clay-2); }
 .s-clean { background: var(--sage-mid); }
-.s-today { background: var(--indigo); }
-.s-future { background: var(--mist-soft); }
+.s-today { background: var(--indigo); box-shadow: inset 0 0 0 3rpx rgba(255, 255, 255, .92); }
+.s-future { background: var(--mist-2); }
 .s-before { background: transparent; border: 1rpx dashed var(--mist); box-sizing: border-box; }

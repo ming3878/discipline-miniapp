@@ -30,7 +30,7 @@
       <view class="k">达成目标</view>
       <view class="v num">{{detail.achieved}}<text class="u"> 次</text></view>
     </view>
-    <view class="metric link" bindtap="goRecords">
+    <view hover-class="is-pressed" class="metric link" bindtap="goRecords">
       <view class="k">记录明细</view>
       <view class="v sm">查看 ›</view>
     </view>
@@ -41,8 +41,8 @@
   <view class="cal-head">
     <view class="m num">{{monthLabel}}</view>
     <view class="cal-nav">
-      <view class="cal-nav-btn {{canPrev ? '' : 'disabled'}}" bindtap="prevMonth">‹</view>
-      <view class="cal-nav-btn {{canNext ? '' : 'disabled'}}" bindtap="nextMonth">›</view>
+      <view hover-class="is-pressed" class="cal-nav-btn {{canPrev ? '' : 'disabled'}}" bindtap="prevMonth">‹</view>
+      <view hover-class="is-pressed" class="cal-nav-btn {{canNext ? '' : 'disabled'}}" bindtap="nextMonth">›</view>
     </view>
   </view>
   <view class="cal">
@@ -79,7 +79,7 @@
         </view>
       </block>
       <view wx:else class="cell-none">当日未破戒</view>
-      <view class="cell-close" bindtap="closeCell">关闭</view>
+      <view hover-class="is-pressed" class="cell-close" bindtap="closeCell">关闭</view>
     </view>
   </view>
 </view>

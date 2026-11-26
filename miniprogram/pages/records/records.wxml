@@ -26,7 +26,7 @@
         <view wx:if="{{item.note}}" class="note">{{item.note}}</view>
         <view wx:else class="note faint">—</view>
       </view>
-      <view class="log-del" data-id="{{item._id}}" bindtap="deleteRecord">删除</view>
+      <view hover-class="is-pressed" class="log-del" data-id="{{item._id}}" bindtap="deleteRecord">删除</view>
     </view>
 
     <view class="list-total">{{totalText}}</view>

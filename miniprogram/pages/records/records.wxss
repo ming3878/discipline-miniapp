@@ -10,7 +10,7 @@
   border: 1rpx solid var(--line);
   border-radius: 26rpx;
   padding: 26rpx 33rpx;
-  font-size: 31rpx;
+  font-size: var(--t-body);
   margin: 14rpx 0 33rpx;
 }
 .filter .arr { color: var(--faint); }
@@ -28,17 +28,25 @@
 }
 /* 原型 .log-date：min-width 40；.d 19；.m 10 */
 .log-date { text-align: center; min-width: 94rpx; }
-.log-date .d { font-size: 45rpx; font-weight: 700; color: var(--ink); line-height: 1; }
-.log-date .m { font-size: 24rpx; color: var(--faint); margin-top: 5rpx; }
+.log-date .d { font-size: var(--t-h); font-weight: 700; color: var(--ink); line-height: 1; }
+.log-date .m { font-size: var(--t-cap); color: var(--sub); margin-top: 5rpx; }
 /* 原型 .log-main：padding-left 12、竖线分隔；.c 12；.note 11 */
 .log-main { flex: 1; border-left: 1rpx solid var(--line); padding-left: 28rpx; min-width: 0; }
-.log-main .c { font-size: 28rpx; font-weight: 600; color: var(--pine); }
-.log-main .note { font-size: 26rpx; color: var(--sub); margin-top: 7rpx; line-height: 1.5; }
-.log-del { color: var(--clay); font-size: 26rpx; align-self: center; padding: 12rpx 0 12rpx 12rpx; }
+.log-main .c { font-size: var(--t-sub); font-weight: 600; color: var(--pine); }
+.log-main .note { font-size: var(--t-sub); color: var(--sub); margin-top: 7rpx; line-height: 1.5; }
+.log-del { position: relative; color: var(--clay); font-size: var(--t-sub); align-self: center; padding: 12rpx 0 12rpx 12rpx; }
+/* 文字型按钮热区补到 88rpx，视觉不变 */
+.log-del::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 88rpx; height: 88rpx;
+  transform: translate(-50%, -50%);
+}
 
-.list-total { text-align: center; font-size: 26rpx; color: var(--faint); margin-top: 33rpx; }
+.list-total { text-align: center; font-size: var(--t-sub); color: var(--sub); margin-top: 33rpx; }
 
 .empty { text-align: center; padding: 140rpx 40rpx; }
 .empty-ic { font-size: 90rpx; color: var(--mist); line-height: 1; }
-.empty-title { font-size: 32rpx; font-weight: 600; margin-top: 26rpx; }
-.empty-sub { font-size: 26rpx; color: var(--sub); margin-top: 12rpx; }
+.empty-title { font-size: var(--t-body); font-weight: 600; margin-top: 26rpx; }
+.empty-sub { font-size: var(--t-sub); color: var(--sub); margin-top: 12rpx; }

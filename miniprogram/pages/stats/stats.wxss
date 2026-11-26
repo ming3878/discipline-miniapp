@@ -1,6 +1,6 @@
 /* 总体统计页 · 数值按原型 px × 2.36 换算，与设计稿等比例 */
 .stats-page { padding-top: 14rpx; }
-.state-hint { text-align: center; color: var(--faint); font-size: 26rpx; padding: 80rpx 0; }
+.state-hint { text-align: center; color: var(--sub); font-size: var(--t-sub); padding: 80rpx 0; }
 
 /* 原型 .sum-grid：gap 9、margin 6/0/4；两列（space-between 自动留缝） */
 .sum-grid { display: flex; flex-wrap: wrap; justify-content: space-between; margin: 14rpx 0 10rpx; }
@@ -21,16 +21,16 @@
   color: #fff;
 }
 .sum.big .k { color: rgba(255,255,255,.72); }
-.sum.big .v { color: #fff; font-size: 80rpx; }
+.sum.big .v { color: #fff; font-size: var(--t-num); }
 .sum.big .u { color: rgba(255,255,255,.6); }
 .sum.wide { width: 100%; }
-.sum .k { font-size: 26rpx; color: var(--sub); margin-bottom: 19rpx; }
-.sum .v { font-size: 61rpx; font-weight: 700; color: var(--pine); line-height: 1; }
-.sum .v.sm { font-size: 40rpx; }
+.sum .k { font-size: var(--t-sub); color: var(--sub); margin-bottom: 19rpx; }
+.sum .v { font-size: var(--t-num-2); font-weight: 700; color: var(--pine); line-height: 1; }
+.sum .v.sm { font-size: var(--t-h); }
 .sum .v.clay, .clay { color: var(--clay); }
-.sum .u { font-size: 24rpx; color: var(--faint); font-weight: 400; }
-.big-note { font-size: 25rpx; color: rgba(255,255,255,.6); margin-top: 14rpx; }
-.faint { color: var(--faint); }
+.sum .u { font-size: var(--t-cap); color: var(--sub); font-weight: 400; }
+.big-note { font-size: var(--t-cap); color: rgba(255,255,255,.6); margin-top: 14rpx; }
+.faint { color: var(--sub); }
 
 /* 图形卡片：原型 .chart padding 14、radius 13 */
 .chart {
@@ -39,8 +39,8 @@
   border-radius: 31rpx;
   padding: 33rpx;
 }
-.chart .ct { font-size: 28rpx; font-weight: 600; margin-bottom: 33rpx; }
-.chart-empty { text-align: center; color: var(--faint); font-size: 26rpx; padding: 40rpx 0; }
+.chart .ct { font-size: var(--t-sub); font-weight: 600; margin-bottom: 33rpx; }
+.chart-empty { text-align: center; color: var(--sub); font-size: var(--t-sub); padding: 40rpx 0; }
 
 /* 柱状图：原型 height 96、gap 6、bar max-width 22 */
 .bars {
@@ -67,11 +67,11 @@
   min-height: 4rpx;
 }
 .bar-col .bv.hot { background: var(--clay); }
-.bar-col .bl { font-size: 22rpx; color: var(--faint); margin-top: 14rpx; }
+.bar-col .bl { font-size: var(--t-cap); color: var(--sub); margin-top: 14rpx; }
 
 /* 横向条形图：原型 track 9、radius 6、row 11 */
 .hbar { margin-bottom: 26rpx; }
-.hbar .row { display: flex; justify-content: space-between; font-size: 26rpx; margin-bottom: 12rpx; }
+.hbar .row { display: flex; justify-content: space-between; font-size: var(--t-sub); margin-bottom: 12rpx; }
 .hbar .track { height: 21rpx; background: var(--mist-soft); border-radius: 999rpx; overflow: hidden; }
 .hbar .fill { height: 100%; background: var(--sage); border-radius: 999rpx; }
 .hbar .fill.hot { background: var(--clay); }
@@ -79,5 +79,5 @@
 /* 空态 */
 .empty { text-align: center; padding: 140rpx 40rpx; }
 .empty-ic { font-size: 90rpx; color: var(--mist); line-height: 1; }
-.empty-title { font-size: 32rpx; font-weight: 600; margin-top: 26rpx; }
-.empty-sub { font-size: 26rpx; color: var(--sub); margin-top: 12rpx; }
+.empty-title { font-size: var(--t-body); font-weight: 600; margin-top: 26rpx; }
+.empty-sub { font-size: var(--t-sub); color: var(--sub); margin-top: 12rpx; }

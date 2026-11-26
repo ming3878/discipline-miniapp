@@ -10,7 +10,7 @@
   <view wx:if="{{loading}}" class="state-hint">加载中…</view>
 
   <!-- 空态 -->
-  <view wx:elif="{{cards.length === 0}}" class="empty" bindtap="goHabits">
+  <view hover-class="is-pressed" wx:elif="{{cards.length === 0}}" class="empty" bindtap="goHabits">
     <view class="empty-ic">◌</view>
     <view class="empty-title">还没有戒断目标</view>
     <view class="empty-sub">点此创建第一个戒断目标</view>
@@ -19,7 +19,7 @@
 
   <!-- 记录卡列表 -->
   <block wx:else>
-    <view
+    <view hover-class="is-pressed"
       wx:for="{{cards}}"
       wx:key="id"
       class="habit"
@@ -59,7 +59,7 @@
         <view class="cnt">
           {{item.periodName}}破戒 <b class="num {{item.overLimit ? 'cnt-clay' : ''}}">{{item.periodCount}}</b> / {{item.limit}} 次
         </view>
-        <view class="rec-btn" data-id="{{item.id}}" catchtap="goRecord">记一次</view>
+        <view hover-class="is-pressed" class="rec-btn" data-id="{{item.id}}" catchtap="goRecord">记一次</view>
       </view>
     </view>
   </block>

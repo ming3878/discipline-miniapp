@@ -16,17 +16,17 @@
   background: #fff; display: flex; align-items: center; justify-content: center;
   font-size: 44rpx; flex-shrink: 0;
 }
-.target-strip .t { font-size: 30rpx; font-weight: 600; color: var(--pine); }
-.target-strip .hint { font-size: 26rpx; color: var(--sage); margin-top: 6rpx; }
+.target-strip .t { font-size: var(--t-body); font-weight: 600; color: var(--pine); }
+.target-strip .hint { font-size: var(--t-sub); color: var(--sage-ink); margin-top: 6rpx; }
 
 /* 原型 .form-card padding 18、radius 16 */
 .form-card { padding: 42rpx; }
 
 /* 原型 .field margin-bottom 20、label 12px、label margin-bottom 8px */
 .field { margin-bottom: 46rpx; }
-.field label { display: block; font-size: 28rpx; font-weight: 600; margin-bottom: 18rpx; color: var(--ink); }
+.field label { display: block; font-size: var(--t-sub); font-weight: 600; margin-bottom: 18rpx; color: var(--ink); }
 .field .req { color: var(--clay); }
-.field-hint { font-size: 24rpx; color: var(--faint); margin-top: 14rpx; line-height: 1.5; }
+.field-hint { font-size: var(--t-cap); color: var(--sub); margin-top: 14rpx; line-height: 1.5; }
 
 /* 原型 .input：padding 13/14、radius 11、font 14 */
 .input {
@@ -35,15 +35,15 @@
   background: #fff;
   border-radius: 26rpx;
   padding: 30rpx 32rpx;
-  font-size: 32rpx;
+  font-size: var(--t-body);
   color: var(--ink);
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
 }
-.input .change { color: var(--pine); font-size: 26rpx; font-weight: 600; }
-.input .ph { color: var(--faint); }
+.input .change { color: var(--pine); font-size: var(--t-sub); font-weight: 600; }
+.input .ph { color: var(--sub); }
 
 /* 原型 .stepper：padding 6、radius 11；button 36px、font 20px、radius 8 */
 .stepper {
@@ -56,13 +56,13 @@
   padding: 14rpx;
 }
 .step-btn {
-  width: 84rpx; height: 84rpx; border-radius: 18rpx;
+  width: 88rpx; height: 88rpx; border-radius: 18rpx;
   background: var(--paper); color: var(--pine);
   font-size: 48rpx; font-weight: 600;
   display: flex; align-items: center; justify-content: center;
   border: 1rpx solid var(--line);
 }
-.step-n { font-size: 48rpx; font-weight: 700; color: var(--ink); }
+.step-n { font-size: var(--t-h); font-weight: 700; color: var(--ink); }
 
 /* 到达上下限时置灰，避免用户连点无效 */
 .step-btn.off {
@@ -80,11 +80,11 @@
   background: #fff;
   border-radius: 26rpx;
   padding: 28rpx 32rpx;
-  font-size: 30rpx;
+  font-size: var(--t-body);
   color: var(--ink);
   box-sizing: border-box;
 }
-.ph { color: var(--faint); }
+.ph { color: var(--sub); }
 
 /* 原型 .save：padding 14、radius 12、font 14 */
 .save {
@@ -92,7 +92,7 @@
   box-sizing: border-box; /* 缺这行会导致 100% + padding 撑破卡片右边界 */
   padding: 32rpx;
   border-radius: 28rpx;
-  font-size: 32rpx;
+  font-size: var(--t-body);
   font-weight: 600;
   color: #fff;
   background: var(--pine);
