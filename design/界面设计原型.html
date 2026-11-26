@@ -7,10 +7,30 @@
 <style>
 :root{
   --paper:#F6F4EE; --surface:#FFFFFF; --pine:#23463B; --pine-2:#2F5A4C;
-  --clay:#C0533B; --clay-soft:#F4E3DE; --sage:#5C8C6A; --sage-soft:#E7F0E9;
-  --indigo:#3E6FB0; --indigo-soft:#E5EDF7; --mist:#DCDAD2; --mist-soft:#F0EFE9;
-  --ink:#1F2A26; --sub:#6B7A72; --faint:#9AA096; --line:#EBE8DF;
+  --clay:#C0533B; --clay-2:#9C3F2C; --clay-soft:#F4E3DE;
+  --sage:#5C8C6A; --sage-soft:#E7F0E9;
+  /* 文字专用色：sage / clay 在暖白底上只有 3.5–4.2，达不到 4.5，只能做色块 */
+  --sage-ink:#3F6B4E; --clay-ink:#9A3B27;
+  /* 未破戒色块专用中间调：sage-soft 在暖白底上几乎看不出绿 */
+  --sage-mid:#7FBD91;
+  --indigo:#3E6FB0; --indigo-soft:#E5EDF7;
+  --mist:#DCDAD2; --mist-soft:#F0EFE9;
+  /* 周视图未来格专用：mist-soft 在白卡上只有 1.15，几乎不可见 */
+  --mist-2:#D2CFC4;
+  --ink:#1F2A26;
+  /* 次级文字唯一一档：白卡 5.56 / 纸底 5.06。层级靠字号与字重，不靠继续调浅 */
+  --sub:#5F6B64;
+  /* 仅装饰：图标、箭头、禁用态。不承载信息，不得用于正文 */
+  --faint:#B4B2A9; --line:#EBE8DF;
   --r:16px; --rs:10px;
+  /* 字号 7 档：px = rpx × 318/750，与 app.wxss 的 rpx 令牌一一对应 */
+  --t-num:34px;    /* 80rpx 主数值：已戒天数、累计破戒 */
+  --t-num-2:24px;  /* 56rpx 问候语、卡片内次要大数 */
+  --t-h:19px;      /* 44rpx 卡片标题、指标数值、日期数字 */
+  --t-h2:15px;     /* 36rpx 列表主文本、区块内标题 */
+  --t-body:13.5px; /* 32rpx 正文、表单、按钮 */
+  --t-sub:12px;    /* 28rpx 辅助说明、meta、图例、标签 */
+  --t-cap:10px;    /* 24rpx 单位、星期、最小说明 */
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
 body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI",sans-serif;line-height:1.5;padding:40px 24px 80px}
@@ -30,12 +50,14 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:44px 32px;align-items:start}
 .screen-block{display:flex;flex-direction:column;align-items:center}
 .screen-label{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;text-align:center}
-.screen-desc{font-size:11.5px;color:var(--sub);margin-bottom:16px;text-align:center;max-width:280px}
+.screen-desc{font-size:12px;color:var(--sub);margin-bottom:16px;text-align:center;max-width:280px}
 
 /* ---------- 手机外壳 ---------- */
 .phone{width:340px;background:var(--paper);border-radius:40px;padding:11px;box-shadow:0 2px 4px rgba(31,42,38,.04),0 24px 60px rgba(31,42,38,.13),0 0 0 1px rgba(31,42,38,.06);position:relative}
 .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#1F2A26;border-radius:0 0 16px 16px;z-index:5}
-.screen{background:var(--paper);border-radius:30px;overflow:hidden;height:640px;display:flex;flex-direction:column;position:relative}
+/* 画板高度改为按内容自适应、最矮 640px：固定 640 会把首页第三张卡、
+   目标管理页的编辑表单、总体统计的第二个图表裁掉，评审稿里内容不能被藏住 */
+.screen{background:var(--paper);border-radius:30px;overflow:hidden;min-height:640px;display:flex;flex-direction:column;position:relative}
 .statusbar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);flex-shrink:0;padding-top:6px}
 .statusbar .icons{display:flex;gap:5px;align-items:center}
 .battery{width:20px;height:10px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
@@ -49,40 +71,45 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
 /* ---------- 通用组件 ---------- */
 .card{background:var(--surface);border-radius:var(--r);padding:16px;border:1px solid var(--line)}
 .muted{color:var(--sub)}
-.faint{color:var(--faint)}
-.chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:600}
-.chip-ok{background:var(--sage-soft);color:var(--sage)}
-.chip-over{background:var(--clay-soft);color:var(--clay)}
-.btn{background:var(--pine);color:#fff;border-radius:11px;padding:11px 16px;font-size:13px;font-weight:600;text-align:center;border:none}
-.btn-clay{background:var(--clay)}
-.btn-soft{background:var(--pine-soft, #EDF1EE);color:var(--pine)}
-.sec-label{font-size:11px;letter-spacing:.08em;color:var(--faint);font-weight:600;text-transform:uppercase;margin:18px 2px 10px}
+.faint{color:var(--sub)}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:var(--t-sub);padding:3px 9px;border-radius:20px;font-weight:600}
+.chip-ok{background:var(--sage-soft);color:var(--sage-ink)}
+.chip-over{background:var(--clay-soft);color:var(--clay-ink)}
+.btn{background:var(--pine);color:#fff;border-radius:11px;padding:11px 16px;font-size:var(--t-body);font-weight:600;text-align:center;border:none}
+.sec-label{font-size:var(--t-sub);letter-spacing:.08em;color:var(--sub);font-weight:600;text-transform:uppercase;margin:18px 2px 10px}
+/* 按压反馈：实现侧统一挂 hover-class="is-pressed"，此处用 :active 对齐 */
+.btn:active,.btn-soft:active,.rec-btn:active,.icon-btn:active,.cal-nav span:active,.add-dash:active,.save:active,.filter:active,.log-del:active,.stepper button:active{opacity:.62}
 
 /* ---------- 首页记录卡 ---------- */
 .hero{padding:8px 2px 16px}
-.hero .date{font-size:12px;color:var(--sub)}
-.hero h2{font-size:25px;font-weight:700;letter-spacing:-.02em;margin-top:3px}
-.hero .sub{font-size:12px;color:var(--faint);margin-top:4px}
+.hero .date{font-size:var(--t-sub);color:var(--sub)}
+.hero h2{font-size:var(--t-num-2);font-weight:700;letter-spacing:-.02em;margin-top:3px}
+.hero .sub{font-size:var(--t-sub);color:var(--sub);margin-top:4px}
 .habit{border:1px solid var(--line);border-radius:var(--r);padding:15px;margin-bottom:12px;background:var(--surface)}
 .habit-top{display:flex;align-items:flex-start;justify-content:space-between}
 .habit-id{display:flex;align-items:center;gap:10px}
 .emoji{width:38px;height:38px;border-radius:11px;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:19px;border:1px solid var(--line)}
-.habit-name{font-size:15px;font-weight:600}
-.habit-sub{font-size:11px;color:var(--sub);margin-top:2px}
+.habit-name{font-size:var(--t-h2);font-weight:600}
+.habit-sub{font-size:var(--t-sub);color:var(--sub);margin-top:2px}
 .streak-row{display:flex;align-items:baseline;gap:6px;margin:14px 0 2px}
-.streak-num{font-size:34px;font-weight:700;color:var(--pine);line-height:1}
-.streak-unit{font-size:12px;color:var(--sub)}
+.streak-num{font-size:var(--t-num);font-weight:700;color:var(--pine);line-height:1}
+.streak-unit{font-size:var(--t-sub);color:var(--sub)}
 .week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:12px}
 .day{text-align:center}
-.day .lbl{font-size:10px;color:var(--faint);margin-bottom:5px}
+.day .lbl{font-size:var(--t-cap);color:var(--sub);margin-bottom:5px}
 .day .lbl.today{color:var(--pine);font-weight:700}
 .bar{height:20px;border-radius:5px}
-.b-broken{background:var(--clay)}.b-clean{background:var(--sage-soft)}.b-today{background:var(--indigo)}.b-future{background:var(--mist-soft)}.b-before{background:transparent;border:1px dashed var(--mist)}
+/* 五态：未来格用 mist-2（mist-soft 在白卡上仅 1.15）；今天格加白色内描边做形状冗余
+   —— 破戒红与今天蓝的亮度比只有 1.11，灰度下仅靠色相分不开 */
+.b-broken{background:var(--clay)}.b-clean{background:var(--sage-mid)}
+.b-today{background:var(--indigo);box-shadow:inset 0 0 0 1.3px rgba(255,255,255,.92)}
+.b-future{background:var(--mist-2)}
+.b-before{background:transparent;border:1px dashed var(--mist)}
 .habit-foot{display:flex;justify-content:space-between;align-items:center;margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
-.habit-foot .cnt{font-size:12px;color:var(--sub)}
-.habit-foot .cnt b{font-size:13px}
+.habit-foot .cnt{font-size:var(--t-sub);color:var(--sub)}
+.habit-foot .cnt b{font-size:var(--t-body)}
 .cnt-clay{color:var(--clay)}
-.rec-btn{background:var(--pine);color:#fff;font-size:12px;font-weight:600;padding:8px 14px;border-radius:9px}
+.rec-btn{background:var(--pine);color:#fff;font-size:var(--t-sub);font-weight:600;padding:8px 14px;border-radius:9px}
 .empty{text-align:center;padding:60px 24px;color:var(--sub)}
 .empty .ic{font-size:38px;opacity:.5}
 
@@ -90,67 +117,75 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
 .form-card{padding:18px;margin-top:6px}
 .target-strip{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--sage-soft);border-radius:12px;margin-bottom:18px}
 .target-strip .emoji{background:#fff}
-.target-strip .t{font-size:13px;font-weight:600;color:var(--pine)}
-.target-strip .hint{font-size:11px;color:var(--sage)}
+.target-strip .t{font-size:var(--t-body);font-weight:600;color:var(--pine)}
+.target-strip .hint{font-size:var(--t-sub);color:var(--sage-ink)}
 .field{margin-bottom:20px}
-.field label{display:block;font-size:12px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.field label{display:block;font-size:var(--t-sub);font-weight:600;margin-bottom:8px;color:var(--ink)}
 .field .req{color:var(--clay)}
-.input{width:100%;border:1px solid var(--line);background:#fff;border-radius:11px;padding:13px 14px;font-size:14px;color:var(--ink);display:flex;align-items:center;justify-content:space-between}
-.input .ph{color:var(--faint)}
+.input{width:100%;border:1px solid var(--line);background:#fff;border-radius:11px;padding:13px 14px;font-size:var(--t-body);color:var(--ink);display:flex;align-items:center;justify-content:space-between}
+.input .ph{color:var(--sub)}
 .stepper{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:11px;background:#fff;padding:6px}
-.stepper button{width:36px;height:36px;border-radius:8px;background:var(--paper);font-size:20px;color:var(--pine);border:1px solid var(--line);font-weight:600}
-.stepper .n{font-size:20px;font-weight:700;color:var(--ink)}
-.note-area{min-height:76px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:12px 14px;font-size:13px;color:var(--faint)}
-.save{width:100%;padding:14px;border-radius:12px;font-size:14px;font-weight:600;color:#fff;background:var(--pine);text-align:center;margin-top:4px}
+/* 计步器按钮 88rpx = 37px，满足 44pt 热区；符号字号不进字号体系 */
+.stepper button{width:37px;height:37px;border-radius:8px;background:var(--paper);font-size:20px;color:var(--pine);border:1px solid var(--line);font-weight:600}
+.stepper button.off{color:var(--faint);background:#fff;border-color:var(--mist)}
+.stepper .n{font-size:var(--t-h);font-weight:700;color:var(--ink)}
+.note-area{min-height:76px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:12px 14px;font-size:var(--t-body);color:var(--sub)}
+.save{width:100%;padding:14px;border-radius:12px;font-size:var(--t-body);font-weight:600;color:#fff;background:var(--pine);text-align:center;margin-top:4px}
 
 /* ---------- 主题管理 ---------- */
 .mgmt-item{display:flex;align-items:center;gap:11px;padding:13px 14px;border:1px solid var(--line);border-radius:13px;background:#fff;margin-bottom:10px}
 .mgmt-item .info{flex:1}
-.mgmt-item .nm{font-size:14px;font-weight:600}
-.mgmt-item .meta{font-size:11px;color:var(--sub);margin-top:3px}
-.icon-btn{width:30px;height:30px;border-radius:8px;background:var(--paper);display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:14px;border:1px solid var(--line)}
+.mgmt-item .nm{font-size:var(--t-h2);font-weight:600}
+.mgmt-item .meta{font-size:var(--t-sub);color:var(--sub);margin-top:3px}
+/* 视觉 30px 不变，热区扩到 37px（44pt）：绝对定位不参与布局，不会挤到相邻元素 */
+.icon-btn{position:relative;width:30px;height:30px;border-radius:8px;background:var(--paper);display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:var(--t-body);border:1px solid var(--line)}
+.icon-btn::after{content:"";position:absolute;top:50%;left:50%;width:37px;height:37px;transform:translate(-50%,-50%)}
 .icon-btn.del{color:var(--clay)}
-.add-dash{border:1.5px dashed var(--sage);border-radius:13px;padding:14px;text-align:center;color:var(--sage);font-size:13px;font-weight:600;background:var(--sage-soft)}
+.add-dash{border:1.5px dashed var(--sage);border-radius:13px;padding:14px;text-align:center;color:var(--sage-ink);font-size:var(--t-body);font-weight:600;background:var(--sage-soft)}
 
 /* ---------- 单卡统计 ---------- */
 .detail-head{display:flex;align-items:center;gap:12px;padding:6px 2px 16px}
 .detail-head .emoji{width:46px;height:46px;font-size:22px}
-.detail-head h2{font-size:20px;font-weight:700}
-.detail-head p{font-size:11px;color:var(--sub);margin-top:2px}
+.detail-head h2{font-size:var(--t-h);font-weight:700}
+.detail-head p{font-size:var(--t-sub);color:var(--sub);margin-top:2px}
 .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .metric{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 10px}
-.metric .k{font-size:10.5px;color:var(--sub);margin-bottom:6px}
-.metric .v{font-size:20px;font-weight:700;color:var(--pine);line-height:1}
-.metric .v.sm{font-size:15px}
-.metric .u{font-size:10px;color:var(--faint);font-weight:400}
+.metric .k{font-size:var(--t-cap);color:var(--sub);margin-bottom:6px}
+.metric .v{font-size:var(--t-h);font-weight:700;color:var(--pine);line-height:1}
+.metric .v.sm{font-size:var(--t-h2)}
+.metric .u{font-size:var(--t-cap);color:var(--sub);font-weight:400}
 .cal-head{display:flex;justify-content:space-between;align-items:center;padding:0 2px 10px}
-.cal-head .m{font-size:14px;font-weight:600}
-.cal-nav{display:flex;gap:6px}
-.cal-nav span{width:26px;height:26px;border-radius:7px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--sub)}
+.cal-head .m{font-size:var(--t-h2);font-weight:600}
+/* 间距 10px：两个 36px 热区相邻时不重叠，否则点左箭头会误触右箭头 */
+.cal-nav{display:flex;gap:10px}
+.cal-nav span{position:relative;width:26px;height:26px;border-radius:7px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:var(--t-body);color:var(--sub)}
+.cal-nav span::after{content:"";position:absolute;top:50%;left:50%;width:36px;height:36px;transform:translate(-50%,-50%)}
 .cal{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
-.cal-wd{text-align:center;font-size:10px;color:var(--faint);padding-bottom:6px}
-.cal-cell{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
-.c-clean{background:var(--sage-soft);color:var(--sage)}
+.cal-wd{text-align:center;font-size:var(--t-cap);color:var(--sub);padding-bottom:6px}
+.cal-cell{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:var(--t-sub);font-weight:600}
+.c-clean{background:var(--sage-soft);color:var(--sage-ink)}
 .c-broken{background:var(--clay);color:#fff}
-.c-broken-2{background:#9C3F2C;color:#fff}
-.c-today{background:var(--indigo);color:#fff}
-.c-future{color:var(--faint)}
-.c-before{color:#CFCFC7;background:var(--mist-soft)}
-.cal-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:10px;color:var(--sub)}
+.c-broken-2{background:var(--clay-2);color:#fff}
+.c-today{background:var(--indigo);color:#fff;box-shadow:inset 0 0 0 1.3px rgba(255,255,255,.92)}
+.c-future{background:var(--mist-soft);color:var(--sub)}
+.c-before{background:transparent;border:1px dashed var(--mist);color:var(--faint)}
+.cal-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:var(--t-cap);color:var(--sub)}
 .cal-legend i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:3px;vertical-align:-1px}
 
 /* ---------- 记录明细 ---------- */
-.filter{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 14px;font-size:13px;margin:6px 0 14px}
+.filter{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 14px;font-size:var(--t-body);margin:6px 0 14px}
 .filter .arr{color:var(--faint)}
 .log-item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:9px;display:flex;align-items:flex-start;gap:11px}
 .log-date{text-align:center;min-width:40px}
-.log-date .d{font-size:19px;font-weight:700;color:var(--ink);line-height:1}
-.log-date .m{font-size:10px;color:var(--faint);margin-top:2px}
+.log-date .d{font-size:var(--t-h);font-weight:700;color:var(--ink);line-height:1}
+.log-date .m{font-size:var(--t-cap);color:var(--sub);margin-top:2px}
 .log-main{flex:1;border-left:1px solid var(--line);padding-left:12px}
-.log-main .c{font-size:12px;font-weight:600;color:var(--pine)}
-.log-main .note{font-size:11px;color:var(--sub);margin-top:3px}
-.log-del{color:var(--clay);font-size:11px;align-self:center}
+.log-main .c{font-size:var(--t-sub);font-weight:600;color:var(--pine)}
+.log-main .note{font-size:var(--t-sub);color:var(--sub);margin-top:3px}
+/* 文字型按钮热区补到 37px，视觉不变 */
+.log-del{position:relative;color:var(--clay);font-size:var(--t-sub);align-self:center;padding:5px 0 5px 5px}
+.log-del::after{content:"";position:absolute;top:50%;left:50%;width:37px;height:37px;transform:translate(-50%,-50%)}
 
 /* ---------- 总体统计 ---------- */
 .sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:6px 0 4px}
@@ -159,31 +194,32 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
 .sum.big .k{color:rgba(255,255,255,.72)}
 .sum.big .v{color:#fff}
 .sum.big .u{color:rgba(255,255,255,.6)}
-.sum .k{font-size:11px;color:var(--sub);margin-bottom:8px}
-.sum .v{font-size:26px;font-weight:700;color:var(--pine);line-height:1}
-.sum .v.sm{font-size:17px}
-.sum .u{font-size:10px;color:var(--faint);font-weight:400}
+.sum .k{font-size:var(--t-sub);color:var(--sub);margin-bottom:8px}
+.sum .v{font-size:var(--t-num-2);font-weight:700;color:var(--pine);line-height:1}
+.sum .v.sm{font-size:var(--t-h)}
+.sum .u{font-size:var(--t-cap);color:var(--sub);font-weight:400}
 .chart{background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px}
-.chart .ct{font-size:12px;font-weight:600;margin-bottom:14px}
+.chart .ct{font-size:var(--t-sub);font-weight:600;margin-bottom:14px}
 .bars{display:flex;align-items:flex-end;justify-content:space-between;height:96px;gap:6px;border-bottom:1px solid var(--line);padding-bottom:0}
 .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
 .bar-col .bv{width:100%;max-width:22px;border-radius:5px 5px 0 0;background:var(--pine)}
 .bar-col .bv.hot{background:var(--clay)}
-.bar-col .bl{font-size:9.5px;color:var(--faint);margin-top:6px}
+.bar-col .bl{font-size:var(--t-cap);color:var(--sub);margin-top:6px}
 .hbar{margin-bottom:11px}
-.hbar .row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px}
+.hbar .row{display:flex;justify-content:space-between;font-size:var(--t-sub);margin-bottom:5px}
 .hbar .track{height:9px;background:var(--mist-soft);border-radius:6px;overflow:hidden}
 .hbar .fill{height:100%;border-radius:6px;background:var(--sage)}
 .hbar .fill.hot{background:var(--clay)}
 
 /* ---------- tabbar ---------- */
 .tabbar{height:56px;background:#fff;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-around;flex-shrink:0;padding-bottom:4px}
-.tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--faint);min-width:52px}
+/* 未选中色 #5F6B64：原 #9AA096 在白底上只有 2.68，不达标（app.json tabBar.color 已同步） */
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:var(--t-cap);color:var(--sub);min-width:52px}
 .tab.on{color:var(--pine);font-weight:600}
 .tab .ti{font-size:17px;line-height:1}
 .home-ind{height:4px;width:100px;background:var(--ink);border-radius:4px;margin:0 auto 6px;opacity:.85}
 
-.footnote{max-width:980px;margin:56px auto 0;text-align:center;font-size:12px;color:var(--faint);line-height:1.9}
+.footnote{max-width:980px;margin:56px auto 0;text-align:center;font-size:12px;color:var(--sub);line-height:1.9}
 </style>
 </head>
 <body>
@@ -197,6 +233,7 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
       <span class="tok"><i class="dot" style="background:#F6F4EE;border:1px solid #ddd"></i>纸底 #F6F4EE</span>
       <span class="tok"><i class="dot" style="background:#23463B"></i>墨绿 #23463B</span>
       <span class="tok"><i class="dot" style="background:#C0533B"></i>赤陶 #C0533B</span>
+      <span class="tok"><i class="dot" style="background:#7FBD91"></i>未破戒 #7FBD91</span>
       <span class="tok"><i class="dot" style="background:#5C8C6A"></i>鼠尾草 #5C8C6A</span>
       <span class="tok"><i class="dot" style="background:#3E6FB0"></i>靛蓝 #3E6FB0</span>
     </div>
@@ -292,18 +329,18 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
           <div class="card form-card">
             <div class="field">
               <label>破戒日期</label>
-              <div class="input"><span class="num">2026-11-24 · 今天</span><span style="color:var(--pine);font-size:12px">更改 ›</span></div>
-              <div style="font-size:10.5px;color:var(--faint);margin-top:6px">最早可选 11-01（戒断起点）</div>
+              <div class="input"><span class="num">2026-11-24 · 今天</span><span style="color:var(--pine);font-size:var(--t-sub)">更改 ›</span></div>
+              <div style="font-size:var(--t-cap);color:var(--sub);margin-top:6px">最早可选 11-01（戒断起点）</div>
             </div>
 
             <div class="field">
               <label>本次破戒次数 <span class="req">*</span></label>
               <div class="stepper"><button>−</button><span class="n num">1</span><button>+</button></div>
-              <div style="font-size:10.5px;color:var(--faint);margin-top:6px">同一天可多次记录，次数会自动累加</div>
+              <div style="font-size:var(--t-cap);color:var(--sub);margin-top:6px">同一天可多次记录，次数会自动累加</div>
             </div>
 
             <div class="field" style="margin-bottom:14px">
-              <label>备注 <span style="color:var(--faint);font-weight:400">（可选）</span></label>
+              <label>备注 <span style="color:var(--sub);font-weight:400">（可选）</span></label>
               <div class="note-area">这次是因为什么？</div>
             </div>
 
@@ -329,14 +366,14 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
           <div class="sec-label">编辑表单 · 字段</div>
           <div class="card form-card" style="padding:15px">
             <div style="display:flex;gap:10px;margin-bottom:13px">
-              <div style="flex:0 0 56px"><div style="font-size:11px;color:var(--sub);margin-bottom:6px">图标</div><div class="emoji" style="width:52px;height:52px;font-size:24px">🚭</div></div>
-              <div style="flex:1"><div style="font-size:11px;color:var(--sub);margin-bottom:6px">标题</div><div class="input" style="padding:11px 12px">戒烟</div></div>
+              <div style="flex:0 0 56px"><div style="font-size:var(--t-sub);color:var(--sub);margin-bottom:6px">图标</div><div class="emoji" style="width:52px;height:52px;font-size:24px">🚭</div></div>
+              <div style="flex:1"><div style="font-size:var(--t-sub);color:var(--sub);margin-bottom:6px">标题</div><div class="input" style="padding:11px 12px">戒烟</div></div>
             </div>
-            <div style="font-size:11px;color:var(--sub);margin:0 0 6px">副标题</div>
+            <div style="font-size:var(--t-sub);color:var(--sub);margin:0 0 6px">副标题</div>
             <div class="input" style="padding:11px 12px;margin-bottom:13px">为了家人，也为了自己</div>
             <div style="display:flex;gap:10px">
-              <div style="flex:1"><div style="font-size:11px;color:var(--sub);margin-bottom:6px">开始日期 C4</div><div class="input num" style="padding:11px 10px;font-size:12px">2026-11-01</div></div>
-              <div style="flex:1"><div style="font-size:11px;color:var(--sub);margin-bottom:6px">目标周期 C5</div><div class="input" style="padding:11px 10px;font-size:12px">每周 ≤ 3 次</div></div>
+              <div style="flex:1"><div style="font-size:var(--t-sub);color:var(--sub);margin-bottom:6px">开始日期 C4</div><div class="input num" style="padding:11px 10px;font-size:var(--t-sub)">2026-11-01</div></div>
+              <div style="flex:1"><div style="font-size:var(--t-sub);color:var(--sub);margin-bottom:6px">目标周期 C5</div><div class="input" style="padding:11px 10px;font-size:var(--t-sub)">每周 ≤ 3 次</div></div>
             </div>
           </div>
         </div>
@@ -364,7 +401,7 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
             <div class="metric"><div class="k">最长已戒</div><div class="v num">58<span class="u"> 天</span></div></div>
             <div class="metric"><div class="k">合计破戒</div><div class="v num" style="color:var(--clay)">9<span class="u"> 次</span></div></div>
             <div class="metric"><div class="k">达成目标</div><div class="v num">15<span class="u"> 次</span></div></div>
-            <div class="metric"><div class="k">记录明细</div><div class="v sm" style="color:var(--sub);font-size:13px;padding-top:4px">查看 ›</div></div>
+            <div class="metric"><div class="k">记录明细</div><div class="v sm" style="color:var(--sub);font-size:var(--t-body);padding-top:4px">查看 ›</div></div>
           </div>
 
           <div class="sec-label">月历破戒情况</div>
@@ -379,7 +416,13 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
               <div class="cal-cell c-clean">22</div><div class="cal-cell c-clean">23</div><div class="cal-cell c-today">24</div><div class="cal-cell c-future">25</div><div class="cal-cell c-future">26</div><div class="cal-cell c-future">27</div><div class="cal-cell c-future">28</div>
               <div class="cal-cell c-future">29</div><div class="cal-cell c-future">30</div>
             </div>
-            <div class="cal-legend"><span><i style="background:var(--clay)"></i>破戒</span><span><i style="background:var(--sage-soft)"></i>未破戒</span><span><i style="background:var(--indigo)"></i>今天</span><span><i style="background:var(--mist-soft)"></i>未来/起点前</span></div>
+            <div class="cal-legend">
+              <span><i style="background:var(--clay)"></i>破戒</span>
+              <span><i style="background:var(--sage-soft)"></i>未破戒</span>
+              <span><i style="background:var(--indigo)"></i>今天</span>
+              <span><i style="background:var(--mist-soft)"></i>未来</span>
+              <span><i style="background:transparent;border:1px dashed var(--mist)"></i>起点前</span>
+            </div>
           </div>
         </div>
       </div></div>
@@ -391,7 +434,7 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
       <div class="screen-desc">按月筛选、日期倒序；单条删除需二次确认</div>
       <div class="phone"><div class="notch"></div><div class="screen">
         <div class="statusbar"><span>9:41</span><span class="icons">●●● <span class="battery"><i></i></span></span></div>
-        <div class="navbar"><span class="nav-back">‹</span><span class="title">记录明细</span><span style="margin-left:auto;font-size:12px;color:var(--sub)">戒烟</span></div>
+        <div class="navbar"><span class="nav-back">‹</span><span class="title">记录明细</span><span style="margin-left:auto;font-size:var(--t-sub);color:var(--sub)">戒烟</span></div>
         <div class="body">
           <div class="filter"><span class="num">2026 年 11 月</span><span class="arr">筛选 ▾</span></div>
 
@@ -401,7 +444,7 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
           <div class="log-item"><div class="log-date"><div class="d num">28</div><div class="m num">10月</div></div><div class="log-main"><div class="c num">破戒 1 次</div><div class="note">加班太晚</div></div><div class="log-del">删除</div></div>
           <div class="log-item"><div class="log-date"><div class="d num">14</div><div class="m num">10月</div></div><div class="log-main"><div class="c num">破戒 1 次</div><div class="note">—</div></div><div class="log-del">删除</div></div>
 
-          <div style="text-align:center;font-size:11px;color:var(--faint);margin-top:14px">共 9 条记录 · 本月 3 条</div>
+          <div style="text-align:center;font-size:var(--t-sub);color:var(--sub);margin-top:14px">共 9 条记录 · 本月 3 条</div>
         </div>
       </div></div>
     </div>
@@ -415,10 +458,10 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
         <div class="navbar"><span class="title" style="font-size:18px">总体统计</span></div>
         <div class="body">
           <div class="sum-grid">
-            <div class="sum big"><div class="k">当前连续未破戒</div><div class="v num" style="font-size:34px">4<span class="u"> 天</span></div><div style="font-size:10.5px;color:rgba(255,255,255,.6);margin-top:6px">任一戒断目标破戒即重新计时</div></div>
+            <div class="sum big"><div class="k">当前连续未破戒</div><div class="v num" style="font-size:var(--t-num)">4<span class="u"> 天</span></div><div style="font-size:var(--t-cap);color:rgba(255,255,255,.6);margin-top:6px">任一戒断目标破戒即重新计时</div></div>
             <div class="sum"><div class="k">累计破戒</div><div class="v num" style="color:var(--clay)">18<span class="u"> 次</span></div></div>
             <div class="sum"><div class="k">进行中</div><div class="v num">3<span class="u"> 个</span></div></div>
-            <div class="sum" style="grid-column:span 2"><div class="k">坚持最久</div><div class="v sm num" style="font-size:16px">🚭 戒烟 · 42 天</div></div>
+            <div class="sum" style="grid-column:span 2"><div class="k">坚持最久</div><div class="v sm num" style="font-size:var(--t-h)">🚭 戒烟 · 42 天</div></div>
           </div>
 
           <div class="sec-label">近 6 个月破戒趋势</div>
@@ -453,7 +496,8 @@ body{background:#EDEBE4;color:var(--ink);font-family:-apple-system,BlinkMacSyste
 
   <div class="footnote">
     设计覆盖率：6 / 6 核心页面（首页 · 记录页 · 戒断目标管理 · 单卡统计 · 记录明细 · 总体统计）<br>
-    设计令牌：6 主色 + 语义色阶 · 圆角 16/10px · 4pt 间距基准 · 数字 tabular-nums 对齐<br>
+    设计令牌：6 主色 + 语义色阶 · 字号 7 档 34/24/19/15/13.5/12/10px · 文字色 2 档（ink / sub）· 圆角 16/10px · 数字 tabular-nums 对齐<br>
+    可访问性：正文与辅助文字实测 ≥ 4.5:1 · 五态带形状冗余（今天=白色内描边、起点前=虚线）· 热区 44pt · 全站按压反馈<br>
     每屏均为高保真静态示意，交互逻辑与统计口径以需求文档 v1.3 为准
   </div>
 
