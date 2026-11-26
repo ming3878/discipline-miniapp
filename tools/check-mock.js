@@ -166,7 +166,24 @@ const d03 = screen('03', '03 · 戒断目标管理页', '04 · 单卡统计页')
 habits.forEach((h) => {
   ok(`${h.name} 起始日/周期`, d03.indexOf(`始于 ${h.startDate.slice(5)} · 每周 ≤ ${h.limit} 次`) > -1);
 });
-ok('编辑表单 C4 与起始日一致', d03.indexOf(`>${a.startDate}</div>`) > -1);
+ok('编辑表单开始日期与起始日一致', d03.indexOf(`>${a.startDate}</div>`) > -1);
+
+// ---------- 文案卫生：内部代号不得进入界面 ----------
+console.log('--- 界面文案：内部代号零泄漏 ---');
+const protoCopyStart = html.indexOf('01 · 首页');
+const protoCopyEnd = html.indexOf('<div class="footnote"');
+const protoCopy = protoCopyStart >= 0 && protoCopyEnd > protoCopyStart
+  ? html.slice(protoCopyStart, protoCopyEnd)
+  : '';
+ok('原型六屏文案无 C1~C5 编号', !/C[1-5]/.test(protoCopy));
+ok('原型六屏文案无「上限次数 X」', protoCopy.indexOf('上限次数 X') === -1);
+const wxmlCopy = ['habits', 'record']
+  .map((n) => fs.readFileSync(path.join(root, `miniprogram/pages/${n}/${n}.wxml`), 'utf8'))
+  .join('\n')
+  .replace(/<!--[\s\S]*?-->/g, ''); // 代码注释允许保留需求编号
+ok('真机表单文案无 C1~C5 编号', !/C[1-5]/.test(wxmlCopy));
+ok('真机表单文案无「上限次数 X」', !/上限次数\s*X/.test(wxmlCopy));
+ok('表单 label 原型与真机一致', d03.indexOf('从哪天开始戒') > -1 && d03.indexOf('>目标周期<') > -1);
 
 console.log('');
 if (fail) {
