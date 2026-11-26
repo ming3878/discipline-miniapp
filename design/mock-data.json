@@ -1,0 +1,51 @@
+{
+  "_comment": "原型假数据的唯一来源。改这里之后必须跑 node tools/check-mock.js，按它算出的数值更新 界面设计原型.html；两边对不上会报错。",
+  "today": "2026-11-26",
+  "habits": [
+    {
+      "id": "a",
+      "name": "戒烟",
+      "icon": "🚭",
+      "subtitle": "为了家人，也为了自己",
+      "startDate": "2026-06-01",
+      "periodType": "week",
+      "limit": 3,
+      "createdAt": 1
+    },
+    {
+      "id": "b",
+      "name": "戒游戏",
+      "icon": "🎮",
+      "subtitle": "工作日不碰",
+      "startDate": "2026-11-01",
+      "periodType": "week",
+      "limit": 2,
+      "createdAt": 2
+    },
+    {
+      "id": "c",
+      "name": "戒熬夜",
+      "icon": "🌙",
+      "subtitle": "23 点前入睡",
+      "startDate": "2026-11-01",
+      "periodType": "week",
+      "limit": 1,
+      "createdAt": 3
+    }
+  ],
+  "records": [
+    { "habitId": "a", "date": "2026-06-20", "count": 1, "note": "出差，饭局上接了烟" },
+    { "habitId": "a", "date": "2026-07-14", "count": 2, "note": "加班到凌晨，抽了两根" },
+    { "habitId": "a", "date": "2026-08-03", "count": 1, "note": "—" },
+    { "habitId": "a", "date": "2026-09-24", "count": 1, "note": "朋友聚会" },
+    { "habitId": "a", "date": "2026-10-02", "count": 1, "note": "压力大，无意识点上" },
+    { "habitId": "a", "date": "2026-10-08", "count": 2, "note": "聚会场合，破例了" },
+    { "habitId": "a", "date": "2026-10-15", "count": 1, "note": "—" },
+    { "habitId": "b", "date": "2026-11-11", "count": 1, "note": "无聊刷了两小时" },
+    { "habitId": "b", "date": "2026-11-19", "count": 1, "note": "—" },
+    { "habitId": "b", "date": "2026-11-24", "count": 1, "note": "下班后开了把排位" },
+    { "habitId": "c", "date": "2026-11-09", "count": 1, "note": "追剧到一点" },
+    { "habitId": "c", "date": "2026-11-16", "count": 1, "note": "—" },
+    { "habitId": "c", "date": "2026-11-23", "count": 2, "note": "连熬两晚" }
+  ]
+}
